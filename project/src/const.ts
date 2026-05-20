@@ -11,3 +11,5 @@ export enum AppRoute {
   Catalog = '/catalog',
   ProductPage = '/product-page'
 }
+
+export const STARS_COUNT = 5;
