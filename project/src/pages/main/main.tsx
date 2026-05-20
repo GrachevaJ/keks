@@ -1,12 +1,13 @@
-import Card from '../../components/card/card';
+import CardList from '../../components/card-list/card-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import { Offer } from '../../types/types';
 
 type MainProps = {
-  cardsCount: number;
+  offers: Offer[];
 }
 
-const Main = ({cardsCount = 0}: MainProps):JSX.Element => (
+const Main = ({offers}: MainProps):JSX.Element => (
   <>
     <Header />
     <main>
@@ -26,7 +27,19 @@ const Main = ({cardsCount = 0}: MainProps):JSX.Element => (
         <div className="container">
           <h2 className="random-main__title">кексы</h2>
           <ul className="random-main__list">
-            {Array.from({length: cardsCount}, () => <Card key={1}/>)}
+            <CardList offers={[...offers].sort(() => 0.5 - Math.random()).slice(0,3)} />
+            <li className="random-main__item">
+              <a className="random-main__link" href="#">
+                <div className="random-main__icon-wrapper">
+                  <div className="random-main__icon">
+                    <svg width="120" height="130" aria-hidden="true">
+                      <use xlinkHref="#icon-keks"></use>
+                    </svg>
+                  </div>
+                </div>
+                <h3 className="random-main__subtitle">Все кексы</h3>
+              </a>
+            </li>
           </ul>
         </div>
       </section>

@@ -8,16 +8,17 @@ import ErrorPage from '../../pages/error-page/error-page';
 import SignUp from '../../pages/sign-up/sign-up';
 import PrivateRoute from '../private-route/private-route';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { Offer } from '../../types/types';
 
 
 type AppProps = {
-  cardsCount: number;
+  offers: Offer[];
 }
 
-const App = ({cardsCount}: AppProps): JSX.Element => (
+const App = ({offers}: AppProps): JSX.Element => (
   <BrowserRouter>
     <Routes>
-      <Route index element={<Main cardsCount={cardsCount} />} />
+      <Route index element={<Main offers={offers} />} />
       <Route path={AppRoute.Login} element={<Login />} />
       <Route path={AppRoute.SignUp} element={<SignUp />} />
       <Route path={AppRoute.Favourites}
