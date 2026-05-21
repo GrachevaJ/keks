@@ -8,4 +8,16 @@ export type Offer = {
   previewImageWebp: string;
   isFavorite: boolean;
   isNew: boolean;
-};
+}
+
+export type Address = {
+  id: number;
+  title: string;
+  address: string;
+  position: {
+    lat: number;
+    lng: number;
+    zoom: number;
+  };
+  isSpec: boolean;
+}

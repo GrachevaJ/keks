@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import Map from '../../components/map/map';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/types';
 
@@ -84,7 +85,7 @@ const Main = ({offers}: MainProps):JSX.Element => (
       <section className="map">
         <div className="container">
           <h2 className="map__title">адреса</h2>
-          <div className="map__wrapper"></div>
+          <Map />
           <ul className="map__addresses">
             <li className="map__address">
               <div className="custom-toggle custom-toggle--radio custom-toggle--address">
@@ -99,7 +100,7 @@ const Main = ({offers}: MainProps):JSX.Element => (
             </li>
             <li className="map__address">
               <div className="custom-toggle custom-toggle--radio custom-toggle--address">
-                <input type="radio" value="user-agreement-12" id="user-agreement-id-12" name="user-agreement" checked />
+                <input type="radio" value="user-agreement-12" id="user-agreement-id-12" name="user-agreement" />
                 <label className="custom-toggle__label" htmlFor="user-agreement-id-12">Кондитерская 2</label>
                 <address className="custom-toggle__address">Морской пр. 2А
                   <svg className="custom-toggle__icon" width="26" height="24" aria-hidden="true">
