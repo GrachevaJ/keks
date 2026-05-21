@@ -24,14 +24,14 @@ const App = ({offers}: AppProps): JSX.Element => (
       <Route path={AppRoute.Favourites}
         element={
           <PrivateRoute
-            authorizationStatus={AuthorizationStatus.NoAuth}
+            authorizationStatus={AuthorizationStatus.Auth}
           >
-            <Favourites />
+            <Favourites offers={offers}/>
           </PrivateRoute>
         }
       />
       <Route path={`${AppRoute.ProductPage}/:id`} element={<ProductPage />} />
-      <Route path={AppRoute.Catalog} element={<Catalog />} />
+      <Route path={AppRoute.Catalog} element={<Catalog offers={offers}/>} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   </BrowserRouter>

@@ -4,11 +4,12 @@ import Card from '../card/card';
 
 type CardListProps = {
   offers: Offer[];
+  place?: 'index' | 'catalog';
 };
 
-const CardList = ({offers}: CardListProps): JSX.Element => (
+const CardList = ({offers, place}: CardListProps): JSX.Element => (
   <>
-    {offers.map((offer) => <Card key={offer.id} {...offer} />)}
+    {offers.map((offer) => <Card key={offer.id} {...offer} place={place}/>)}
   </>
 );
 

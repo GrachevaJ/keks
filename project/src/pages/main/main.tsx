@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import { AppRoute } from '../../const';
 import { Offer } from '../../types/types';
 
 type MainProps = {
@@ -18,7 +20,7 @@ const Main = ({offers}: MainProps):JSX.Element => (
             <p className="hero__subtitle">Твоя пушистая кондитерская</p>
             <p className="hero__title">КЕКС</p>
             <div className="hero__button-wrapper">
-              <a className="btn" href="catalog-page.html">Скорее смотреть</a>
+              <Link className="btn" to={AppRoute.Catalog}>Скорее смотреть</Link>
             </div>
           </div>
         </div>
@@ -27,9 +29,9 @@ const Main = ({offers}: MainProps):JSX.Element => (
         <div className="container">
           <h2 className="random-main__title">кексы</h2>
           <ul className="random-main__list">
-            <CardList offers={[...offers].sort(() => 0.5 - Math.random()).slice(0,3)} />
+            <CardList offers={[...offers].sort(() => 0.5 - Math.random()).slice(0,3)} place = 'index' />
             <li className="random-main__item">
-              <a className="random-main__link" href="#">
+              <Link className="random-main__link" to={AppRoute.Catalog}>
                 <div className="random-main__icon-wrapper">
                   <div className="random-main__icon">
                     <svg width="120" height="130" aria-hidden="true">
@@ -38,7 +40,7 @@ const Main = ({offers}: MainProps):JSX.Element => (
                   </div>
                 </div>
                 <h3 className="random-main__subtitle">Все кексы</h3>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
