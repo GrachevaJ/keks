@@ -1,4 +1,4 @@
-import { Address } from './types/types';
+import { Address, Comment } from './types/types';
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -51,3 +51,5 @@ export const addresses: Address[] = [
     isSpec: true,
   }
 ];
+
+

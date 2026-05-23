@@ -8,14 +8,15 @@ import ErrorPage from '../../pages/error-page/error-page';
 import SignUp from '../../pages/sign-up/sign-up';
 import PrivateRoute from '../private-route/private-route';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { Offer } from '../../types/types';
+import { Offer, Comment } from '../../types/types';
 
 
 type AppProps = {
   offers: Offer[];
+  reviews: Comment[];
 }
 
-const App = ({offers}: AppProps): JSX.Element => (
+const App = ({offers, reviews}: AppProps): JSX.Element => (
   <BrowserRouter>
     <Routes>
       <Route index element={<Main offers={offers} />} />
@@ -30,7 +31,7 @@ const App = ({offers}: AppProps): JSX.Element => (
           </PrivateRoute>
         }
       />
-      <Route path={`${AppRoute.ProductPage}/:id`} element={<ProductPage />} />
+      <Route path={`${AppRoute.ProductPage}/:id`} element={<ProductPage reviews={reviews}/>} />
       <Route path={AppRoute.Catalog} element={<Catalog offers={offers}/>} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

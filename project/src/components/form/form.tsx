@@ -24,13 +24,13 @@ const Form = (): JSX.Element => {
       <div className="review-form__inputs-wrapper">
         <div className="custom-input">
           <label><span className="custom-input__label">Достоинства</span>
-            <input type="text" name="advantages" placeholder="Достоинства" maxLength={500} value={advantages} onChange={handleAdvantagesChange} required={rating >= 4} />
+            <input type="text" name="advantages" placeholder="Достоинства" minLength={5} maxLength={500} value={advantages} onChange={handleAdvantagesChange} required={rating >= 4} />
             {rating >= 4 && <span style={{color: '#FFA181', fontSize: '12px', borderBottom: '2px solid #DD7870', padding: '25px 0 10px 0'}}>Осталось {500 - advantages.length} символов</span>}
           </label>
         </div>
         <div className="custom-input">
           <label><span className="custom-input__label">Недостатки</span>
-            <input type="text" name="disadvantages" placeholder="Недостатки" maxLength={500} value={disadvantages} onChange={handleDisadvantagesChange} required={rating <= 3} />
+            <input type="text" name="disadvantages" placeholder="Недостатки" minLength={5} maxLength={500} value={disadvantages} onChange={handleDisadvantagesChange} required={rating <= 3} />
             {(rating <= 3 && rating !== 0) && <span style={{color: '#FFA181', fontSize: '12px', borderBottom: '2px solid #DD7870', padding: '25px 0 10px 0'}}>Осталось {500 - disadvantages.length} символов</span>}
           </label>
         </div>

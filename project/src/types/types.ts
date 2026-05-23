@@ -21,3 +21,15 @@ export type Address = {
   };
   isSpec: boolean;
 }
+
+export type Comment = {
+  id: string;
+  isoDate: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+  };
+  positive: string;
+  negative: string;
+  rating: number;
+}
