@@ -1,6 +1,6 @@
 import {Marker, Icon} from 'leaflet';
 import {useRef, useEffect} from 'react';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import type { Address } from '../../types/types';
 import { addresses } from '../../const';
 import 'leaflet/dist/leaflet.css';

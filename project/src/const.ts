@@ -1,4 +1,4 @@
-import { Address, Comment } from './types/types';
+import { Address, CategoryName } from './types/types';
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -52,4 +52,12 @@ export const addresses: Address[] = [
   }
 ];
 
+export const categories = ['bisque', 'cheesecake', 'shortbread', 'dessert'] as const;
+export const categoryLabels: Record<CategoryName, string> = {
+  bisque: 'Бисквит',
+  cheesecake: 'Чизкейк',
+  shortbread: 'Песочное',
+  dessert: 'Десерт'
+};
 
+export const types = ['chocolate', 'vanilla', 'vegetarian', 'honey-cake', 'lemon', 'new-york', 'tart', 'funnel-cake', 'basket-cake', 'chocolate-muffin', 'brand-muffin'] as const;

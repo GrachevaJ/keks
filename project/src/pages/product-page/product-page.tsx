@@ -7,7 +7,6 @@ import { Comment } from '../../types/types';
 
 type ProductPageProps = {
   reviews: Comment[];
-
 }
 
 const ProductPage = ({reviews}: ProductPageProps): JSX.Element => (

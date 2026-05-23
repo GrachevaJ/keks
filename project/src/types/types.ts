@@ -1,14 +1,25 @@
+import {categories, types} from '../const';
+import store from '../store/store';
+
+export type CategoryName = typeof categories[number];
+export type TypesName = typeof types[number];
+
 export type Offer = {
   id: string;
   title: string;
-  category: 'bisque' | 'cheesecake' | 'shortbread' | 'dessert';
-  type: 'chocolate' | 'vanilla' | 'vegetarian' | 'honey-cake' | 'lemon' | 'new-york' | 'tart' | 'funnel-cake' | 'basket-cake' | 'chocolate-muffin' | 'brand-muffin';
+  category: CategoryName;
+  type: TypesName;
   price: number;
   previewImage: string;
   previewImageWebp: string;
   isFavorite: boolean;
   isNew: boolean;
 }
+
+// export type Category = {
+//   category: CategoryName;
+//   types: TypesName;
+// }
 
 export type Address = {
   id: number;
@@ -33,3 +44,6 @@ export type Comment = {
   negative: string;
   rating: number;
 }
+
+export type State = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

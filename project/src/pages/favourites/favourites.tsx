@@ -1,13 +1,9 @@
 import CardList from '../../components/card-list/card-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import { Offer } from '../../types/types';
 
-type FavouritesProps = {
-  offers: Offer[];
-};
 
-const Favourites = ({offers}: FavouritesProps): JSX.Element => (
+const Favourites = (): JSX.Element => (
   <>
     <Header />
     <main>
@@ -49,7 +45,7 @@ const Favourites = ({offers}: FavouritesProps): JSX.Element => (
               <h2 className="visually-hidden">Каталог</h2>
               <div className="catalog__wrapper">
                 <ul className="catalog__list">
-                  <CardList offers={offers} />
+                  <CardList />
                 </ul>
               </div>
             </div>
