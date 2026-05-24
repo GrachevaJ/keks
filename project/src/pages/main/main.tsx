@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import CardList from '../../components/card-list/card-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import MainCardList from '../../components/main-card-list/main-card-list';
 import Map from '../../components/map/map';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app';
@@ -32,26 +32,7 @@ const Main = ():JSX.Element => {
             </div>
           </div>
         </div>
-        <section className="random-main">
-          <div className="container">
-            <h2 className="random-main__title">кексы</h2>
-            <ul className="random-main__list">
-              <CardList place = 'index' />
-              <li className="random-main__item">
-                <Link className="random-main__link" to={AppRoute.Catalog}>
-                  <div className="random-main__icon-wrapper">
-                    <div className="random-main__icon">
-                      <svg width="120" height="130" aria-hidden="true">
-                        <use xlinkHref="#icon-keks"></use>
-                      </svg>
-                    </div>
-                  </div>
-                  <h3 className="random-main__subtitle">Все кексы</h3>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </section>
+        <MainCardList />
         <section className="last-review">
           <div className="container">
             <h2 className="last-review__title">последний отзыв</h2>

@@ -4,12 +4,12 @@ import type { CategoryName } from '../../types/types';
 type CategoryProps = {
   category: CategoryName;
   active: boolean;
-  onClick: (category: CategoryName) => void;
+  onClick: (category: CategoryName | null) => void;
 }
 
 const Category = ({category, active, onClick}: CategoryProps): JSX.Element => {
   const handleClick = () => {
-    onClick(category);
+    onClick(active ? null : category);
   };
 
   return (

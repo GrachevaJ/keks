@@ -1,4 +1,4 @@
-import CardList from '../../components/card-list/card-list';
+import CatalogCardList from '../../components/catalog-card-list/catalog-card-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 
@@ -40,16 +40,7 @@ const Favourites = (): JSX.Element => (
               <button className="btn btn--second" type="button">Очистить</button>
             </div>
           </div>
-          <section className="catalog">
-            <div className="container">
-              <h2 className="visually-hidden">Каталог</h2>
-              <div className="catalog__wrapper">
-                <ul className="catalog__list">
-                  <CardList />
-                </ul>
-              </div>
-            </div>
-          </section>
+          <CatalogCardList />
         </section>
       </div>
     </main>

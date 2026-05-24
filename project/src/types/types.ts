@@ -1,14 +1,14 @@
-import {categories, types} from '../const';
+import {categories, toppings} from '../const';
 import store from '../store/store';
 
 export type CategoryName = typeof categories[number];
-export type TypesName = typeof types[number];
+export type ToppingName = typeof toppings[number];
 
 export type Offer = {
   id: string;
   title: string;
   category: CategoryName;
-  type: TypesName;
+  type: ToppingName;
   price: number;
   previewImage: string;
   previewImageWebp: string;
