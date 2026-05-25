@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks/use-app';
 import Card from '../card/card';
+import Spinner from '../spinner/spinner';
 
 type MainCardListProps = {
   place?: 'index' | 'catalog';
@@ -10,6 +11,11 @@ type MainCardListProps = {
 const MainCardList = ({place = 'index'}: MainCardListProps): JSX.Element => {
   const offers = useAppSelector((state) => state.offers);
   const randomOffers = [...offers].sort(() => Math.random() - 0.5).slice(0, 3);
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+
+  if (isOffersLoading) {
+    return <Spinner />;
+  }
 
   return (
     <section className="random-main">

@@ -4,6 +4,13 @@ import store from '../store/store';
 export type CategoryName = typeof categories[number];
 export type ToppingName = typeof toppings[number];
 
+export type User = {
+  name: string;
+  email: string;
+  avatarUrl: string;
+  token: string;
+};
+
 export type Offer = {
   id: string;
   title: string;
@@ -15,11 +22,6 @@ export type Offer = {
   isFavorite: boolean;
   isNew: boolean;
 }
-
-// export type Category = {
-//   category: CategoryName;
-//   types: TypesName;
-// }
 
 export type Address = {
   id: number;

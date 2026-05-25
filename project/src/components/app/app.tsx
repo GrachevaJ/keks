@@ -7,7 +7,7 @@ import ProductPage from '../../pages/product-page/product-page';
 import ErrorPage from '../../pages/error-page/error-page';
 import SignUp from '../../pages/sign-up/sign-up';
 import PrivateRoute from '../private-route/private-route';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { Comment } from '../../types/types';
 
 
@@ -23,9 +23,7 @@ const App = ({reviews}: AppProps): JSX.Element => (
       <Route path={AppRoute.SignUp} element={<SignUp />} />
       <Route path={AppRoute.Favourites}
         element={
-          <PrivateRoute
-            authorizationStatus={AuthorizationStatus.Auth}
-          >
+          <PrivateRoute>
             <Favourites />
           </PrivateRoute>
         }

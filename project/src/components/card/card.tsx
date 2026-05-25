@@ -21,7 +21,7 @@ const Card = ({
       <Link className="card-item__img-link" to={`${AppRoute.ProductPage}/${id}`}>
         <div className="card-item__img-wrapper">
           <picture>
-            <source type="image/webp" srcSet={`${previewImageWebp}, ${previewImageWebp.split('.')[0]}@2x.webp 2x`} /><img src={previewImage} srcSet={`${previewImage.split('.')[0]}@2x.jpg 2x`} width="241" height="245" alt={title} />
+            <source type="image/webp" srcSet={previewImageWebp}/><img src={previewImage} srcSet={previewImage} width="241" height="245" alt={title} />
           </picture>
         </div>
         {isNew && <span className="card-item__label">Новинка</span>}

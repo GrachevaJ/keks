@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { setCategory, setType } from '../../store/actions';
 import Card from '../card/card';
 import FiltersNotFound from '../filters-not-found/filters-not-found';
+import Spinner from '../spinner/spinner';
 
 type CatalogCardListProps = {
   place?: 'index' | 'catalog';
@@ -15,6 +16,7 @@ type CatalogCardListProps = {
 const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: CatalogCardListProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const [limit, setLimit] = useState<number>(initialLimit);
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
 
   useEffect(() => {
     dispatch(setCategory(null));
@@ -40,6 +42,10 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
   const handleShowMore = () => {
     setLimit((prevLimit) => prevLimit + step);
   };
+
+  if (isOffersLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>

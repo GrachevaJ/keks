@@ -14,6 +14,11 @@ export enum AppRoute {
   ProductPage = '/product-page'
 }
 
+export enum ApiRoute {
+  Offers = '/products',
+  Login = '/users/login'
+}
+
 export const STARS_COUNT = 5;
 
 export const addresses: Address[] = [
