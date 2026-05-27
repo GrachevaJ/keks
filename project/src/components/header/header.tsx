@@ -4,12 +4,13 @@ import { useAppSelector } from '../../hooks/use-app';
 
 const Header = (): JSX.Element => {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const email = useAppSelector((state) => state.user.email);
 
   return (
     <header className="header header--authorized">
       <div className="container">
         <div className="header__inner"><span className="header__logo"><Link to={AppRoute.Root}><img src="img/svg/logo.svg" width="170" height="69" alt="Кондитерская кекс" /></Link></span>
-          {authorizationStatus === AuthorizationStatus.Auth && (
+          {(authorizationStatus === AuthorizationStatus.Auth) ? (
             <>
               <div className="header__user-info-wrap">
                 <div className="header__user-info">
@@ -18,7 +19,10 @@ const Header = (): JSX.Element => {
                       <source type="image/webp" srcSet="img/content/user-avatar.webp, img/content/user-avatar@2x.webp 2x" /><img src="img/content/user-avatar.jpg" srcSet="img/content/user-avatar@2x.jpg 2x" width="62" height="62" alt="Аватар пользователя." />
                     </picture>
                   </div>
-                  <p className="header__user-mail">keks@academy.ru</p>
+                  <p className="header__user-mail">{email}</p>
+                  <pre style={{ background: '#f5f5f5', padding: '10px' }}>
+                    {JSON.stringify(email, null, 2)}
+                  </pre>
                 </div>
               </div>
               <div className="header__buttons">
@@ -36,15 +40,16 @@ const Header = (): JSX.Element => {
                   </div>
                 </div>
               </div>
-            </>)}
-          <div className="header__buttons">
-            <div className="header__btn">
-              <Link className="btn btn--third header__link header__link--reg" to={AppRoute.SignUp}>Регистрация</Link>
+            </>) : (
+            <div className="header__buttons">
+              <div className="header__btn">
+                <Link className="btn btn--third header__link header__link--reg" to={AppRoute.SignUp}>Регистрация</Link>
+              </div>
+              <div className="header__btn">
+                <Link className="btn" to={AppRoute.Login}>Войти</Link>
+              </div>
             </div>
-            <div className="header__btn">
-              <Link className="btn" to={AppRoute.Login}>Войти</Link>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </header>

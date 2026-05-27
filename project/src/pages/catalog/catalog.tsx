@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
 import CatalogCardList from '../../components/catalog-card-list/catalog-card-list';
 import CategoriesList from '../../components/categories-list/categories-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import { AppRoute } from '../../const';
 
 
 const Catalog = (): JSX.Element => (
@@ -11,11 +13,11 @@ const Catalog = (): JSX.Element => (
       <h1 className="visually-hidden">Каталог товаров</h1>
       <div className="back-link">
         <div className="container">
-          <a className="back-link__link" href="#">Назад
+          <Link className="back-link__link" to={AppRoute.Root}>Назад
             <svg className="back-link__icon" width="30" height="16" aria-hidden="true">
               <use xlinkHref="#icon-arrow-left"></use>
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="catalog-filter">

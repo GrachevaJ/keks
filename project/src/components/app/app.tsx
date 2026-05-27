@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Favourites from '../../pages/favourites/favourites';
@@ -9,6 +9,8 @@ import SignUp from '../../pages/sign-up/sign-up';
 import PrivateRoute from '../private-route/private-route';
 import { AppRoute } from '../../const';
 import { Comment } from '../../types/types';
+import {unstable_HistoryRouter as HistoryRouter} from 'react-router-dom';
+import history from '../../store/history';
 
 
 type AppProps = {
@@ -16,7 +18,7 @@ type AppProps = {
 }
 
 const App = ({reviews}: AppProps): JSX.Element => (
-  <BrowserRouter>
+  <HistoryRouter history={history}>
     <Routes>
       <Route index element={<Main />} />
       <Route path={AppRoute.Login} element={<Login />} />
@@ -32,7 +34,8 @@ const App = ({reviews}: AppProps): JSX.Element => (
       <Route path={AppRoute.Catalog} element={<Catalog />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
-  </BrowserRouter>
+  </HistoryRouter>
 );
+
 
 export default App;

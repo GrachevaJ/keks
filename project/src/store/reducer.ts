@@ -1,7 +1,7 @@
-import {createReducer} from '@reduxjs/toolkit';
+import {createReducer, PayloadAction} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
-import type { CategoryName, Offer, ToppingName } from '../types/types';
-import { fetchOffers, fetchUserStatus, setCategory, setOffers, setType } from './actions';
+import type { CategoryName, Offer, ToppingName, User } from '../types/types';
+import { fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
 
 type State = {
   category: CategoryName | null;
@@ -9,6 +9,7 @@ type State = {
   offers: Offer[];
   isOffersLoading: boolean;
   authorizationStatus: AuthorizationStatus;
+  user: User;
 }
 
 const initialState: State = {
@@ -17,6 +18,12 @@ const initialState: State = {
   offers: [],
   isOffersLoading: false,
   authorizationStatus: AuthorizationStatus.NoAuth,
+  user: {
+    name: '',
+    email: '',
+    avatarUrl: '',
+    token: ''
+  }
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -45,5 +52,17 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchUserStatus.rejected, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(loginUser.fulfilled, (state, action) => {
+      state.user.email = action.payload;
+      state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(loginUser.rejected, (state) => {
+      state.user = initialState.user;
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
+    .addCase(signupUser.fulfilled, (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+      state.authorizationStatus = AuthorizationStatus.Auth;
     });
 });

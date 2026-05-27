@@ -16,7 +16,8 @@ export enum AppRoute {
 
 export enum ApiRoute {
   Offers = '/products',
-  Login = '/users/login'
+  Login = '/users/login',
+  Signup = '/users/registration'
 }
 
 export const STARS_COUNT = 5;
