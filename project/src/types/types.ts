@@ -11,6 +11,8 @@ export type User = {
   token: string;
 };
 
+export type UserAuth = Pick<User, 'email'> & {password: string};
+
 export type Offer = {
   id: string;
   title: string;
