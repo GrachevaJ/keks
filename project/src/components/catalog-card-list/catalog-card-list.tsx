@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
-import { setCategory, setType } from '../../store/actions';
+import { setType } from '../../store/actions';
 import Card from '../card/card';
 import FiltersNotFound from '../filters-not-found/filters-not-found';
 import Spinner from '../spinner/spinner';
@@ -19,22 +17,22 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
   const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
 
   useEffect(() => {
-    dispatch(setCategory(null));
     dispatch(setType([]));
   }, [dispatch]);
 
-  const category = useAppSelector((state) => state.category);
+  const activeCategory = useAppSelector((state) => state.category);
   const type = useAppSelector((state) => state.type);
+  const offers = useAppSelector((state) => state.offers);
 
   useEffect(() => {
     setLimit(initialLimit);
-  }, [category, type, initialLimit]);
+  }, [activeCategory, type, initialLimit]);
 
   const filteredOffers = useAppSelector((state) => {
-    let result = state.offers;
+    let result = offers;
 
-    if (state.category !== null) {
-      result = result.filter((offer) => offer.category === state.category);
+    if (activeCategory !== null) {
+      result = result.filter((offer) => offer.category === activeCategory);
     }
 
     if (state.type.length > 0) {
@@ -65,6 +63,7 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
   }
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {filteredOffers.length > 0 ? (
         <section className="catalog">

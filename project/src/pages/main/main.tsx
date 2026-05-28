@@ -8,7 +8,6 @@ import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app';
 import { setCategory } from '../../store/actions';
 
-
 const Main = ():JSX.Element => {
   const dispatch = useAppDispatch();
 

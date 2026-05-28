@@ -1,10 +1,9 @@
 import {createReducer, PayloadAction} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
-import type { CategoryName, Offer, ToppingName, User } from '../types/types';
-import { fetchOffer, fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
+import type { Category, CategoryName, Offer, ToppingName, User } from '../types/types';
+import { fetchCategories, fetchOffer, fetchOffers, fetchUserStatus, loginUser, setOffers, setType, signupUser } from './actions';
 
 type State = {
-  category: CategoryName | null;
   type: ToppingName[];
   offers: Offer[];
   isOffersLoading: boolean;
@@ -12,10 +11,11 @@ type State = {
   user: User;
   offer: Offer | null;
   isOfferLoading: boolean;
+  categories: Category[];
+  category: CategoryName | null;
 }
 
 const initialState: State = {
-  category: null,
   type: [],
   offers: [],
   isOffersLoading: false,
@@ -27,14 +27,13 @@ const initialState: State = {
     token: ''
   },
   offer: null,
-  isOfferLoading: false
+  isOfferLoading: false,
+  categories: [],
+  category: null
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(setCategory, (state, action) => {
-      state.category = action.payload;
-    })
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
     })
@@ -78,5 +77,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOffer.rejected, (state) => {
       state.isOfferLoading = false;
+    })
+    .addCase(fetchCategories.fulfilled, (state, action) => {
+      state.categories = action.payload;
     });
 });

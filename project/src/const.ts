@@ -11,13 +11,19 @@ export enum AppRoute {
   SignUp = '/sign-up',
   Favourites = '/favourites',
   Catalog = '/catalog',
-  ProductPage = '/product-page'
+  ProductPage = '/product-page',
+  NotFound = '/404'
+}
+
+export enum HttpCode {
+  NotFound = 404
 }
 
 export enum ApiRoute {
   Offers = '/products',
   Login = '/users/login',
-  Signup = '/users/registration'
+  Signup = '/users/registration',
+  Categories = '/categories'
 }
 
 export const STARS_COUNT = 5;
@@ -77,7 +83,7 @@ export const toppingLabels: Record<ToppingName, string> = {
   'new-york': 'Нью-Йорк',
   'tart': 'Тарт',
   'funnel-cake': 'Фанел-кейк',
-  'basket-cake': 'Корзина',
+  'basket-cake': 'Корзинка',
   'chocolate-muffin': 'Шоколадный маффин',
   'brand-muffin': 'Капкейк'
 };

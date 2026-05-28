@@ -1,16 +1,22 @@
-import { toppings } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { setType } from '../../store/actions';
-import type { ToppingName } from '../../types/types';
+import type { CategoryName, ToppingName } from '../../types/types';
 import Topping from '../topping/topping';
 
-const ToppingsList = (): JSX.Element => {
+type ToppingsListProps = {
+  category: CategoryName;
+}
+const ToppingsList = ({category}: ToppingsListProps): JSX.Element => {
   const dispatch = useAppDispatch();
-  const activeToppings = useAppSelector((state) => state.type);
+  const currentCategory = useAppSelector((state) => state.categories.find((item) => item.category === category));
+  const activeToppings = useAppSelector((state)=> state.type);
+
+  const toppings: ToppingName[] = currentCategory?.types || [];
 
   const handleChange = (type: ToppingName) => {
     const isActive = activeToppings.includes(type);
     let nextToppings: ToppingName[];
+
     if (isActive) {
       nextToppings = activeToppings.filter((t) => t !== type);
     } else {

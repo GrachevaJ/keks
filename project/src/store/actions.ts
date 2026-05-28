@@ -1,9 +1,10 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
-import { ApiRoute, AppRoute } from '../const';
-import { CategoryName, Offer, SignupData, ToppingName, User, UserAuth } from '../types/types';
+import { AxiosError, AxiosInstance } from 'axios';
+import { ApiRoute, AppRoute, HttpCode } from '../const';
+import { Category, CategoryName, Offer, SignupData, ToppingName, User, UserAuth } from '../types/types';
 import {History} from 'history';
 import { Token } from '../utils';
+
 
 type Extra = {
   api: AxiosInstance;
@@ -18,7 +19,8 @@ export const Action = {
   FETCH_USER_STATUS: 'user/fetch-status',
   LOGIN_USER: 'user/login',
   SIGNUP_USER: 'user/signup',
-  FETCH_OFFER: 'offer/fetch'
+  FETCH_OFFER: 'offer/fetch',
+  FETCH_CATEGORIES: 'categories/fetch'
 };
 
 export const setCategory = createAction<CategoryName | null>(Action.SET_CATEGORY);
@@ -71,8 +73,28 @@ export const signupUser = createAsyncThunk<User, SignupData, {extra: Extra}>(
 export const fetchOffer = createAsyncThunk<Offer, Offer['id'], {extra: Extra}>(
   Action.FETCH_OFFER,
   async (id, {extra}) => {
+    const {api, history} = extra;
+
+    try {
+      const {data} = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.status === HttpCode.NotFound) {
+        history.push(AppRoute.NotFound);
+      }
+
+      return Promise.reject(axiosError);
+    }
+  });
+
+export const fetchCategories = createAsyncThunk<Category[], undefined, {extra: Extra}>(
+  Action.FETCH_CATEGORIES,
+  async (_, {extra}) => {
     const {api} = extra;
-    const {data} = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+    const {data} = await api.get<Category[]>(ApiRoute.Categories);
 
     return data;
   });

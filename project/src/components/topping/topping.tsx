@@ -14,7 +14,7 @@ const Topping = ({type, active, onChange}: ToppingProps): JSX.Element => {
   return (
     <li className="catalog-filter__item catalog-filter__item--second-level">
       <div className="custom-toggle custom-toggle--checkbox">
-        <input type="checkbox" value="chocolate" id={`catalog-second-level-id-${type}`} name="catalog-second-level" checked={active} onChange={handleChange}/>
+        <input type="checkbox" value={type} id={`catalog-second-level-id-${type}`} name="catalog-second-level" checked={active} onChange={handleChange}/>
         <label className="custom-toggle__label" htmlFor={`catalog-second-level-id-${type}`}>{toppingLabels[type]}</label>
       </div>
     </li>
