@@ -29,6 +29,11 @@ export type Offer = {
   previewImageWebp: string;
   isFavorite: boolean;
   isNew: boolean;
+  description: string;
+  images: [string];
+  weight: number;
+  rating: number;
+  reviewCount: number;
 }
 
 export type Address = {

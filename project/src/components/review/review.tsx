@@ -15,7 +15,7 @@ const Review = ({isoDate, user, positive, negative, rating}: Comment) => {
             return (
               <svg
                 key={`star-${index + 1}`}
-                className={`star-rating__star ${isActive ? 'star-rating__star star-rating__star--active' : ''}`}
+                className={`star-rating__star ${isActive ? 'star-rating__star--active' : ''}`}
                 width="30"
                 height="30"
                 aria-hidden="true"

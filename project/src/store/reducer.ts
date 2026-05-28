@@ -1,7 +1,7 @@
 import {createReducer, PayloadAction} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import type { CategoryName, Offer, ToppingName, User } from '../types/types';
-import { fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
+import { fetchOffer, fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
 
 type State = {
   category: CategoryName | null;
@@ -10,6 +10,8 @@ type State = {
   isOffersLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   user: User;
+  offer: Offer | null;
+  isOfferLoading: boolean;
 }
 
 const initialState: State = {
@@ -23,7 +25,9 @@ const initialState: State = {
     email: '',
     avatarUrl: '',
     token: ''
-  }
+  },
+  offer: null,
+  isOfferLoading: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -64,5 +68,15 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(signupUser.fulfilled, (state, action: PayloadAction<User>) => {
       state.user = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
+    })
+    .addCase(fetchOffer.pending, (state) => {
+      state.isOfferLoading = true;
+    })
+    .addCase(fetchOffer.fulfilled, (state, action) => {
+      state.offer = action.payload;
+      state.isOfferLoading = false;
+    })
+    .addCase(fetchOffer.rejected, (state) => {
+      state.isOfferLoading = false;
     });
 });

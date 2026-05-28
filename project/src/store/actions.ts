@@ -17,7 +17,8 @@ export const Action = {
   FETCH_OFFERS: 'offers/fetch',
   FETCH_USER_STATUS: 'user/fetch-status',
   LOGIN_USER: 'user/login',
-  SIGNUP_USER: 'user/signup'
+  SIGNUP_USER: 'user/signup',
+  FETCH_OFFER: 'offer/fetch'
 };
 
 export const setCategory = createAction<CategoryName | null>(Action.SET_CATEGORY);
@@ -66,3 +67,13 @@ export const signupUser = createAsyncThunk<User, SignupData, {extra: Extra}>(
 
     return data;
   });
+
+export const fetchOffer = createAsyncThunk<Offer, Offer['id'], {extra: Extra}>(
+  Action.FETCH_OFFER,
+  async (id, {extra}) => {
+    const {api} = extra;
+    const {data} = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+
+    return data;
+  });
+
