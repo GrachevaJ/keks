@@ -1,7 +1,7 @@
 import {createReducer, PayloadAction} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import type { Category, CategoryName, Offer, ToppingName, User } from '../types/types';
-import { fetchCategories, fetchOffer, fetchOffers, fetchUserStatus, loginUser, setOffers, setType, signupUser } from './actions';
+import { fetchCategories, fetchOffer, fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
 
 type State = {
   type: ToppingName[];
@@ -13,6 +13,7 @@ type State = {
   isOfferLoading: boolean;
   categories: Category[];
   category: CategoryName | null;
+  activeCategory: CategoryName | null;
 }
 
 const initialState: State = {
@@ -29,11 +30,15 @@ const initialState: State = {
   offer: null,
   isOfferLoading: false,
   categories: [],
-  category: null
+  category: null,
+  activeCategory: null
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
+    .addCase(setCategory, (state, action) => {
+      state.activeCategory = action.payload;
+    })
     .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
     })

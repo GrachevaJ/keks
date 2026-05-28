@@ -6,6 +6,7 @@ import Topping from '../topping/topping';
 type ToppingsListProps = {
   category: CategoryName;
 }
+
 const ToppingsList = ({category}: ToppingsListProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const currentCategory = useAppSelector((state) => state.categories.find((item) => item.category === category));

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
-import { setType } from '../../store/actions';
+import { setCategory, setType } from '../../store/actions';
 import Card from '../card/card';
 import FiltersNotFound from '../filters-not-found/filters-not-found';
 import Spinner from '../spinner/spinner';
@@ -17,10 +17,11 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
   const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
 
   useEffect(() => {
+    dispatch(setCategory(null));
     dispatch(setType([]));
   }, [dispatch]);
 
-  const activeCategory = useAppSelector((state) => state.category);
+  const activeCategory = useAppSelector((state) => state.activeCategory);
   const type = useAppSelector((state) => state.type);
   const offers = useAppSelector((state) => state.offers);
 
@@ -28,19 +29,19 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
     setLimit(initialLimit);
   }, [activeCategory, type, initialLimit]);
 
-  const filteredOffers = useAppSelector((state) => {
+  const filteredOffers = useMemo(() => {
     let result = offers;
 
     if (activeCategory !== null) {
       result = result.filter((offer) => offer.category === activeCategory);
     }
 
-    if (state.type.length > 0) {
-      result = result.filter((offer) => state.type.includes(offer.type));
+    if (type.length > 0) {
+      result = result.filter((offer) => type.includes(offer.type));
     }
 
     return result;
-  });
+  }, [offers, activeCategory, type]);
 
   const visibleOffers = filteredOffers.slice(0, limit);
   const hasMore = limit < filteredOffers.length;
