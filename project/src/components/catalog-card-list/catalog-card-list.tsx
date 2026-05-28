@@ -23,6 +23,13 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
     dispatch(setType([]));
   }, [dispatch]);
 
+  const category = useAppSelector((state) => state.category);
+  const type = useAppSelector((state) => state.type);
+
+  useEffect(() => {
+    setLimit(initialLimit);
+  }, [category, type, initialLimit]);
+
   const filteredOffers = useAppSelector((state) => {
     let result = state.offers;
 
@@ -39,8 +46,18 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
 
   const visibleOffers = filteredOffers.slice(0, limit);
   const hasMore = limit < filteredOffers.length;
+
   const handleShowMore = () => {
     setLimit((prevLimit) => prevLimit + step);
+  };
+
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+    setLimit(initialLimit);
   };
 
   if (isOffersLoading) {
@@ -57,9 +74,13 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
               <ul className="catalog__list">
                 {visibleOffers.map((offer) => (<Card key={offer.id} {...offer} place={place} />))}
               </ul>
-              {hasMore && (
+              {hasMore ? (
                 <div className="catalog__button-wrapper">
                   <button className="btn btn--second" type="button" onClick={handleShowMore}>Показать еще</button>
+                </div>
+              ) : (
+                <div className="catalog__button-wrapper">
+                  <button className="btn btn--second" type="button" onClick={handleScrollToTop}>в начало</button>
                 </div>
               )}
             </div>
