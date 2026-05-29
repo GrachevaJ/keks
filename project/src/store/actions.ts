@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
-import { Category, CategoryName, Offer, SignupData, ToppingName, User, UserAuth } from '../types/types';
+import { Category, CategoryName, Comment, Offer, SignupData, ToppingName, User, UserAuth } from '../types/types';
 import {History} from 'history';
 import { Token } from '../utils';
 
@@ -20,7 +20,8 @@ export const Action = {
   LOGIN_USER: 'user/login',
   SIGNUP_USER: 'user/signup',
   FETCH_OFFER: 'offer/fetch',
-  FETCH_CATEGORIES: 'categories/fetch'
+  FETCH_CATEGORIES: 'categories/fetch',
+  FETCH_LAST_REVIEW: 'last-review/fetch'
 };
 
 export const setCategory = createAction<CategoryName | null>(Action.SET_CATEGORY);
@@ -99,3 +100,11 @@ export const fetchCategories = createAsyncThunk<Category[], undefined, {extra: E
     return data;
   });
 
+export const fetchLastReview = createAsyncThunk<Comment, undefined, {extra: Extra}>(
+  Action.FETCH_LAST_REVIEW,
+  async (_, {extra}) => {
+    const {api} = extra;
+    const {data} = await api.get<Comment>(ApiRoute.LastReview);
+
+    return data;
+  });

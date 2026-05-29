@@ -4,9 +4,10 @@ import CroppedDescription from '../../components/cropped-description/cropped-des
 import Footer from '../../components/footer/footer';
 import Form from '../../components/form/form';
 import Header from '../../components/header/header';
+import RatingStar from '../../components/rating-star/rating-star';
 import ReviewList from '../../components/review-list/review-list';
 import Spinner from '../../components/spinner/spinner';
-import { AppRoute, STARS_COUNT } from '../../const';
+import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { fetchOffer } from '../../store/actions';
 import { Comment } from '../../types/types';
@@ -75,21 +76,7 @@ const ProductPage = ({reviews}: ProductPageProps): JSX.Element | null => {
                 </div>
                 <div className="item-details__review-wrapper">
                   <div className="star-rating star-rating--big">
-                    {Array.from({length: STARS_COUNT}).map((_, index) => {
-                      const isActive: boolean = index < rating;
-
-                      return (
-                        <svg
-                          key={`star-${index + 1}`}
-                          className={`star-rating__star ${isActive ? 'star-rating__star--active' : ''}`}
-                          width="30"
-                          height="30"
-                          aria-hidden="true"
-                        >
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      );
-                    })}
+                    <RatingStar rating={rating} />
                     <span className="star-rating__count">{reviewCount}</span>
                   </div>
                   <CroppedDescription description={description} />

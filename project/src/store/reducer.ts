@@ -1,7 +1,7 @@
 import {createReducer, PayloadAction} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
-import type { Category, CategoryName, Offer, ToppingName, User } from '../types/types';
-import { fetchCategories, fetchOffer, fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
+import type { Category, CategoryName, Offer, ToppingName, User, Comment } from '../types/types';
+import { fetchCategories, fetchLastReview, fetchOffer, fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
 
 type State = {
   type: ToppingName[];
@@ -14,6 +14,7 @@ type State = {
   categories: Category[];
   category: CategoryName | null;
   activeCategory: CategoryName | null;
+  lastReview: Comment;
 }
 
 const initialState: State = {
@@ -31,7 +32,18 @@ const initialState: State = {
   isOfferLoading: false,
   categories: [],
   category: null,
-  activeCategory: null
+  activeCategory: null,
+  lastReview: {
+    id: '',
+    isoDate: '',
+    user: {
+      name: '',
+      avatarUrl: '',
+    },
+    positive: '',
+    negative: '',
+    rating: 0
+  }
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -85,5 +97,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchCategories.fulfilled, (state, action) => {
       state.categories = action.payload;
+    })
+    .addCase(fetchLastReview.fulfilled, (state, action) => {
+      state.lastReview = action.payload;
     });
 });

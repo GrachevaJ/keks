@@ -15,3 +15,5 @@ export class Token {
     localStorage.removeItem(this._name);
   }
 }
+
+export const formatDate = (date: string) => `${date.slice(8, 10)}.${date.slice(5, 7)}`;
