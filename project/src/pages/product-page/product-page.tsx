@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import CroppedDescription from '../../components/cropped-description/cropped-description/cropped-description';
 import Footer from '../../components/footer/footer';
@@ -9,9 +9,10 @@ import RatingStar from '../../components/rating-star/rating-star';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsError from '../../components/reviews-error/reviews-error';
 import Spinner from '../../components/spinner/spinner';
-import { AppRoute } from '../../const';
+import { AppRoute, sortLabels } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { fetchOffer, fetchReviews } from '../../store/actions';
+import { SortType } from '../../types/types';
 
 
 const ProductPage = (): JSX.Element | null => {
@@ -23,6 +24,7 @@ const ProductPage = (): JSX.Element | null => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const reviews = useAppSelector((state) => state.reviews);
   const isReviewsError = useAppSelector((state) => state.reviewsError);
+  const [currentSort, setCurrentSort] = useState<SortType>('any');
 
   useEffect(() => {
     const {id} = params;
@@ -30,6 +32,7 @@ const ProductPage = (): JSX.Element | null => {
       dispatch(fetchOffer(id));
       dispatch(fetchReviews(id));
     }
+    setCurrentSort('any');
   }, [params, dispatch]);
 
   if (!offer) {
@@ -40,6 +43,25 @@ const ProductPage = (): JSX.Element | null => {
     setIsFormVisible(!isFormVisible);
   };
 
+  const handleChangeSort = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentSort(e.target.value as SortType);
+  };
+
+  const getSortedReviews = () => {
+    const reviewsCopy = [...reviews];
+
+    if (currentSort === 'high') {
+      return reviewsCopy.sort((a, b) => b.rating - a.rating);
+    }
+
+    if (currentSort === 'low') {
+      return reviewsCopy.sort((a, b) => a.rating - b.rating);
+    }
+
+    return reviewsCopy;
+  };
+
+  const sortedReviews = getSortedReviews();
 
   const renderReviews = () => {
     const handleReviewsTryAgain = () => {
@@ -57,7 +79,7 @@ const ProductPage = (): JSX.Element | null => {
       return <NoReviews />;
     }
 
-    return <ReviewList reviews={reviews} />;
+    return <ReviewList reviews={sortedReviews} />;
   };
 
   if (isOfferLoading) {
@@ -132,7 +154,7 @@ const ProductPage = (): JSX.Element | null => {
               <div className="filter-sort__filter-wrap">
                 <h3 className="filter-sort__filter-title">Показать с рейтингом</h3>
                 <div className="filter-sort__filter">
-                  <button className="filter-sort__filter-btn" type="button">Любой
+                  <button className="filter-sort__filter-btn" type="button">{sortLabels[currentSort]}
                     <svg className="filter-sort__filter-icon" width="14" height="15" aria-hidden="true">
                       <use xlinkHref="#icon-polygon"></use>
                     </svg>
@@ -140,19 +162,40 @@ const ProductPage = (): JSX.Element | null => {
                   <ul className="filter-sort__filter-list">
                     <li className="filter-sort__filter-item">
                       <div className="custom-toggle custom-toggle--sorting">
-                        <input type="radio" id="review-sort-1" name="review-sort" checked />
+                        <input
+                          type="radio"
+                          id="review-sort-1"
+                          name="review-sort"
+                          value="any"
+                          checked={currentSort === 'any'}
+                          onChange={handleChangeSort}
+                        />
                         <label className="custom-toggle__label" htmlFor="review-sort-1">Любой</label>
                       </div>
                     </li>
                     <li className="filter-sort__filter-item">
                       <div className="custom-toggle custom-toggle--sorting">
-                        <input type="radio" id="review-sort-2" name="review-sort" />
+                        <input
+                          type="radio"
+                          id="review-sort-2"
+                          name="review-sort"
+                          value="high"
+                          checked={currentSort === 'high'}
+                          onChange={handleChangeSort}
+                        />
                         <label className="custom-toggle__label" htmlFor="review-sort-2">Высокий</label>
                       </div>
                     </li>
                     <li className="filter-sort__filter-item">
                       <div className="custom-toggle custom-toggle--sorting">
-                        <input type="radio" id="review-sort-3" name="review-sort" />
+                        <input
+                          type="radio"
+                          id="review-sort-3"
+                          name="review-sort"
+                          value="low"
+                          checked={currentSort === 'low'}
+                          onChange={handleChangeSort}
+                        />
                         <label className="custom-toggle__label" htmlFor="review-sort-3">Низкий</label>
                       </div>
                     </li>

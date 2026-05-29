@@ -1,3 +1,5 @@
+import { Comment } from "./types/types";
+
 export class Token {
   private static _name = 'keks-auth-token';
 
@@ -17,3 +19,7 @@ export class Token {
 }
 
 export const formatDate = (date: string) => `${date.slice(8, 10)}.${date.slice(5, 7)}`;
+
+// export const reviewsFromNewToOld = (reviews: Comment[], limit: number) => [...reviews].sort((a, b) => b.isoDate.localeCompare(a.isoDate)).slice(0, limit);
+
+// export const reviewsFromOldToNew = (reviews: Comment[], limit: number) => [...reviews].sort((a, b) => b.isoDate.localeCompare(a.isoDate)).slice(0, limit);

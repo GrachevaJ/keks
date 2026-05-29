@@ -1,4 +1,4 @@
-import { Address, CategoryName, ToppingName } from './types/types';
+import { Address, CategoryName, SortType, ToppingName } from './types/types';
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -90,3 +90,9 @@ export const toppingLabels: Record<ToppingName, string> = {
   'brand-muffin': 'Капкейк'
 };
 
+
+export const sortLabels: Record<SortType, string> = {
+  'any': 'Любой',
+  'high': 'Высокий',
+  'low': 'Низкий'
+};
