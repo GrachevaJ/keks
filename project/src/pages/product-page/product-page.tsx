@@ -4,31 +4,31 @@ import CroppedDescription from '../../components/cropped-description/cropped-des
 import Footer from '../../components/footer/footer';
 import Form from '../../components/form/form';
 import Header from '../../components/header/header';
+import NoReviews from '../../components/no-reviews/no-reviews';
 import RatingStar from '../../components/rating-star/rating-star';
 import ReviewList from '../../components/review-list/review-list';
+import ReviewsError from '../../components/reviews-error/reviews-error';
 import Spinner from '../../components/spinner/spinner';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
-import { fetchOffer } from '../../store/actions';
-import { Comment } from '../../types/types';
+import { fetchOffer, fetchReviews } from '../../store/actions';
 
 
-type ProductPageProps = {
-  reviews: Comment[];
-}
-
-const ProductPage = ({reviews}: ProductPageProps): JSX.Element | null => {
+const ProductPage = (): JSX.Element | null => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
   const offer = useAppSelector((state) => state.offer);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const reviews = useAppSelector((state) => state.reviews);
+  const isReviewsError = useAppSelector((state) => state.reviewsError);
 
   useEffect(() => {
     const {id} = params;
     if (id) {
       dispatch(fetchOffer(id));
+      dispatch(fetchReviews(id));
     }
   }, [params, dispatch]);
 
@@ -38,6 +38,26 @@ const ProductPage = ({reviews}: ProductPageProps): JSX.Element | null => {
 
   const handleFormClick = () => {
     setIsFormVisible(!isFormVisible);
+  };
+
+
+  const renderReviews = () => {
+    const handleReviewsTryAgain = () => {
+      const {id} = params;
+      if (id) {
+        dispatch(fetchReviews(id));
+      }
+    };
+
+    if (isReviewsError) {
+      return <ReviewsError onClick={handleReviewsTryAgain}/>;
+    }
+
+    if (reviews.length === 0) {
+      return <NoReviews />;
+    }
+
+    return <ReviewList reviews={reviews} />;
   };
 
   if (isOfferLoading) {
@@ -160,7 +180,7 @@ const ProductPage = ({reviews}: ProductPageProps): JSX.Element | null => {
         <section className="comments">
           <h2 className="visually-hidden">Список комментариев</h2>
           <div className="container">
-            <ReviewList reviews={reviews} />
+            {renderReviews()}
           </div>
         </section>
       </main>

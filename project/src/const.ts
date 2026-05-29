@@ -24,7 +24,8 @@ export enum ApiRoute {
   Login = '/users/login',
   Signup = '/users/registration',
   Categories = '/categories',
-  LastReview = '/reviews/getLast'
+  LastReview = '/reviews/getLast',
+  Reviews = '/reviews'
 }
 
 export const STARS_COUNT = 5;

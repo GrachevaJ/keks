@@ -1,7 +1,7 @@
-import {createReducer, PayloadAction} from '@reduxjs/toolkit';
+import {createReducer} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import type { Category, CategoryName, Offer, ToppingName, User, Comment } from '../types/types';
-import { fetchCategories, fetchLastReview, fetchOffer, fetchOffers, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
+import { fetchCategories, fetchLastReview, fetchOffer, fetchOffers, fetchReviews, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
 
 type State = {
   type: ToppingName[];
@@ -15,6 +15,8 @@ type State = {
   category: CategoryName | null;
   activeCategory: CategoryName | null;
   lastReview: Comment;
+  reviews: Comment[];
+  reviewsError: boolean;
 }
 
 const initialState: State = {
@@ -43,7 +45,9 @@ const initialState: State = {
     positive: '',
     negative: '',
     rating: 0
-  }
+  },
+  reviews: [],
+  reviewsError: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -81,7 +85,7 @@ export const reducer = createReducer(initialState, (builder) => {
       state.user = initialState.user;
       state.authorizationStatus = AuthorizationStatus.NoAuth;
     })
-    .addCase(signupUser.fulfilled, (state, action: PayloadAction<User>) => {
+    .addCase(signupUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
     })
@@ -100,5 +104,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchLastReview.fulfilled, (state, action) => {
       state.lastReview = action.payload;
+    })
+    .addCase(fetchReviews.fulfilled, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(fetchReviews.rejected, (state) => {
+      state.reviewsError = true;
     });
 });

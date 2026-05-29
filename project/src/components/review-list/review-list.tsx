@@ -10,7 +10,7 @@ type ReviewListProps = {
 
 const ReviewList = ({reviews, initialLimit = 2, step = 2}: ReviewListProps) => {
   const [limit, setLimit] = useState<number>(initialLimit);
-  const visibleReviews = reviews.sort((a, b) => b.isoDate.localeCompare(a.isoDate)).slice(0, limit);
+  const visibleReviews = [...reviews].sort((a, b) => b.isoDate.localeCompare(a.isoDate)).slice(0, limit);
   const hasMore = limit < reviews.length;
 
   const handleShowMore = () => {

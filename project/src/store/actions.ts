@@ -21,7 +21,8 @@ export const Action = {
   SIGNUP_USER: 'user/signup',
   FETCH_OFFER: 'offer/fetch',
   FETCH_CATEGORIES: 'categories/fetch',
-  FETCH_LAST_REVIEW: 'last-review/fetch'
+  FETCH_LAST_REVIEW: 'last-review/fetch',
+  FETCH_REVIEWS: 'reviews/fetch'
 };
 
 export const setCategory = createAction<CategoryName | null>(Action.SET_CATEGORY);
@@ -105,6 +106,15 @@ export const fetchLastReview = createAsyncThunk<Comment, undefined, {extra: Extr
   async (_, {extra}) => {
     const {api} = extra;
     const {data} = await api.get<Comment>(ApiRoute.LastReview);
+
+    return data;
+  });
+
+export const fetchReviews = createAsyncThunk<Comment[], Offer['id'], {extra: Extra}>(
+  Action.FETCH_REVIEWS,
+  async (id, {extra}) => {
+    const {api} = extra;
+    const {data} = await api.get<Comment[]>(`${ApiRoute.Reviews}/${id}`);
 
     return data;
   });

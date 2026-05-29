@@ -8,16 +8,11 @@ import ErrorPage from '../../pages/error-page/error-page';
 import SignUp from '../../pages/sign-up/sign-up';
 import PrivateRoute from '../private-route/private-route';
 import { AppRoute } from '../../const';
-import { Comment } from '../../types/types';
+
 import {unstable_HistoryRouter as HistoryRouter} from 'react-router-dom';
 import history from '../../store/history';
 
-
-type AppProps = {
-  reviews: Comment[];
-}
-
-const App = ({reviews}: AppProps): JSX.Element => (
+const App = (): JSX.Element => (
   <HistoryRouter history={history}>
     <Routes>
       <Route index element={<Main />} />
@@ -30,7 +25,7 @@ const App = ({reviews}: AppProps): JSX.Element => (
           </PrivateRoute>
         }
       />
-      <Route path={`${AppRoute.ProductPage}/:id`} element={<ProductPage reviews={reviews}/>} />
+      <Route path={`${AppRoute.ProductPage}/:id`} element={<ProductPage />} />
       <Route path={AppRoute.Catalog} element={<Catalog />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

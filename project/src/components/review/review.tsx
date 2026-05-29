@@ -18,7 +18,7 @@ const Review = ({isoDate, user, positive, negative, rating}: Comment) => {
         </div>
         <div className="review__image-wrapper">
           <picture>
-            <source type="image/webp" srcSet={`${avatarUrl.substring(0, avatarUrl.lastIndexOf('.'))}.webp, ${avatarUrl.substring(0, avatarUrl.lastIndexOf('.'))}@2x.webp 2x`} /><img src={avatarUrl} srcSet={`${avatarUrl.substring(0, avatarUrl.lastIndexOf('.'))}@2x.jpg 2x`} width="162" height="162" alt={`avatar ${name}`} />
+            <source type="image/webp" srcSet={avatarUrl} /><img src={avatarUrl} srcSet={avatarUrl} width="162" height="162" alt={`avatar ${name}`} />
           </picture>
         </div>
       </div>
