@@ -27,7 +27,7 @@ export const Action = {
 };
 
 export const setCategory = createAction<CategoryName | null>(Action.SET_CATEGORY);
-export const setOffers = createAction<Offer[]>(Action.SET_OFFERS);
+// export const setOffers = createAction<Offer[]>(Action.SET_OFFERS);
 export const setType = createAction<ToppingName[]>(Action.SET_TYPE);
 
 export const fetchOffers = createAsyncThunk<Offer[], undefined, {extra: Extra}>(

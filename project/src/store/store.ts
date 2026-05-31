@@ -1,12 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
-import { reducer } from './reducer';
+import { rootReducer } from './rootReducer';
 import { fetchCategories, fetchFavoritesOffers, fetchOffers, fetchUserStatus } from './actions';
 import { createAPI } from '../api';
 import history from './history';
 
 const api = createAPI();
 const store = configureStore({
-  reducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     thunk: {
       extraArgument: {

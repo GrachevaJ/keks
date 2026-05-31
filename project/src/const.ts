@@ -97,3 +97,9 @@ export const sortLabels: Record<SortType, string> = {
   'high': 'Высокий',
   'low': 'Низкий'
 };
+
+export enum StoreSlice {
+  SiteData = 'SITE_DATA',
+  SiteProcess = 'SITE_PROCESS',
+  UserProcess = 'USER_PROCESS'
+}

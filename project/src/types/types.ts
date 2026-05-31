@@ -1,5 +1,5 @@
 import {categories, toppings} from '../const';
-import store from '../store/store';
+
 
 export type CategoryName = typeof categories[number];
 export type ToppingName = typeof toppings[number];
@@ -18,6 +18,8 @@ export type SignupData = {
 }
 
 export type UserAuth = Pick<User, 'email'> & {password: string};
+
+export type UserData = Omit<User, 'name' | 'token'>;
 
 export type Offer = {
   id: string;
@@ -65,6 +67,5 @@ export type Category = {
   types: ToppingName[];
 }
 
-export type State = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+
 export type SortType = 'any' | 'high' | 'low';
