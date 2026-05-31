@@ -10,7 +10,7 @@ export type SiteData = {
   isOffersLoading: boolean;
   offer: Offer | null;
   isOfferLoading: boolean;
-  favorites: Offer[];
+  favoriteOffers: Offer[];
   isFavoriteOffersLoading: boolean;
   lastReview: Comment;
   reviews: Comment[];

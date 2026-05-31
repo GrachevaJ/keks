@@ -8,7 +8,7 @@ const initialState: SiteData = {
   isOffersLoading: false,
   offer: null,
   isOfferLoading: false,
-  favorites: [],
+  favoriteOffers: [],
   isFavoriteOffersLoading: false,
   lastReview: {
     id: '',
@@ -64,7 +64,7 @@ export const siteData = createSlice({
         state.isFavoriteOffersLoading = true;
       })
       .addCase(fetchFavoritesOffers.fulfilled, (state, action) => {
-        state.favorites = action.payload;
+        state.favoriteOffers = action.payload;
         state.isFavoriteOffersLoading = false;
       })
       .addCase(fetchFavoritesOffers.rejected, (state) => {
