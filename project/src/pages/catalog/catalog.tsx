@@ -1,33 +1,27 @@
 import { Link } from 'react-router-dom';
 import CatalogCardList from '../../components/catalog-card-list/catalog-card-list';
 import CategoriesList from '../../components/categories-list/categories-list';
-import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header';
 import { AppRoute } from '../../const';
 
 
 const Catalog = (): JSX.Element => (
   <>
-    <Header />
-    <main>
-      <h1 className="visually-hidden">Каталог товаров</h1>
-      <div className="back-link">
-        <div className="container">
-          <Link className="back-link__link" to={AppRoute.Root}>Назад
-            <svg className="back-link__icon" width="30" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-arrow-left"></use>
-            </svg>
-          </Link>
-        </div>
+    <h1 className="visually-hidden">Каталог товаров</h1>
+    <div className="back-link">
+      <div className="container">
+        <Link className="back-link__link" to={AppRoute.Root}>Назад
+          <svg className="back-link__icon" width="30" height="16" aria-hidden="true">
+            <use xlinkHref="#icon-arrow-left"></use>
+          </svg>
+        </Link>
       </div>
-      <div className="catalog-filter">
-        <div className="container">
-          <CategoriesList />
-        </div>
+    </div>
+    <div className="catalog-filter">
+      <div className="container">
+        <CategoriesList />
       </div>
-      <CatalogCardList />
-    </main>
-    <Footer />
+    </div>
+    <CatalogCardList />
   </>
 );
 

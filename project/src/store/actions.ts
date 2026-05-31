@@ -22,7 +22,8 @@ export const Action = {
   FETCH_OFFER: 'offer/fetch',
   FETCH_CATEGORIES: 'categories/fetch',
   FETCH_LAST_REVIEW: 'last-review/fetch',
-  FETCH_REVIEWS: 'reviews/fetch'
+  FETCH_REVIEWS: 'reviews/fetch',
+  FETCH_FAVORITES_OFFERS: 'favorites-offer/fetch'
 };
 
 export const setCategory = createAction<CategoryName | null>(Action.SET_CATEGORY);
@@ -115,6 +116,15 @@ export const fetchReviews = createAsyncThunk<Comment[], Offer['id'], {extra: Ext
   async (id, {extra}) => {
     const {api} = extra;
     const {data} = await api.get<Comment[]>(`${ApiRoute.Reviews}/${id}`);
+
+    return data;
+  });
+
+export const fetchFavoritesOffers = createAsyncThunk<Offer[], undefined, {extra: Extra}>(
+  Action.FETCH_FAVORITES_OFFERS,
+  async (_, {extra}) => {
+    const {api} = extra;
+    const {data} = await api.get<Offer[]>(ApiRoute.Favorites);
 
     return data;
   });

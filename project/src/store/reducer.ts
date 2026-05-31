@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import type { Category, CategoryName, Offer, ToppingName, User, Comment } from '../types/types';
-import { fetchCategories, fetchLastReview, fetchOffer, fetchOffers, fetchReviews, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
+import { fetchCategories, fetchFavoritesOffers, fetchLastReview, fetchOffer, fetchOffers, fetchReviews, fetchUserStatus, loginUser, setCategory, setOffers, setType, signupUser } from './actions';
 
 type State = {
   type: ToppingName[];
@@ -17,6 +17,8 @@ type State = {
   lastReview: Comment;
   reviews: Comment[];
   reviewsError: boolean;
+  favorites: Offer[];
+  isFavoriteOffersLoading: boolean;
 }
 
 const initialState: State = {
@@ -47,7 +49,9 @@ const initialState: State = {
     rating: 0
   },
   reviews: [],
-  reviewsError: false
+  reviewsError: false,
+  favorites: [],
+  isFavoriteOffersLoading: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -110,5 +114,15 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchReviews.rejected, (state) => {
       state.reviewsError = true;
+    })
+    .addCase(fetchFavoritesOffers.pending, (state) => {
+      state.isFavoriteOffersLoading = true;
+    })
+    .addCase(fetchFavoritesOffers.fulfilled, (state, action) => {
+      state.favorites = action.payload;
+      state.isFavoriteOffersLoading = false;
+    })
+    .addCase(fetchFavoritesOffers.rejected, (state) => {
+      state.isFavoriteOffersLoading = false;
     });
 });

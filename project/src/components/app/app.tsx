@@ -11,23 +11,26 @@ import { AppRoute } from '../../const';
 
 import {unstable_HistoryRouter as HistoryRouter} from 'react-router-dom';
 import history from '../../store/history';
+import Layout from '../layout/layout';
 
 const App = (): JSX.Element => (
   <HistoryRouter history={history}>
     <Routes>
-      <Route index element={<Main />} />
+      <Route path='/' element={<Layout />}>
+        <Route index element={<Main />} />
+        <Route path={AppRoute.Favourites}
+          element={
+            <PrivateRoute>
+              <Favourites />
+            </PrivateRoute>
+          }
+        />
+        <Route path={`${AppRoute.ProductPage}/:id`} element={<ProductPage />} />
+        <Route path={AppRoute.Catalog} element={<Catalog />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
       <Route path={AppRoute.Login} element={<Login />} />
       <Route path={AppRoute.SignUp} element={<SignUp />} />
-      <Route path={AppRoute.Favourites}
-        element={
-          <PrivateRoute>
-            <Favourites />
-          </PrivateRoute>
-        }
-      />
-      <Route path={`${AppRoute.ProductPage}/:id`} element={<ProductPage />} />
-      <Route path={AppRoute.Catalog} element={<Catalog />} />
-      <Route path="*" element={<ErrorPage />} />
     </Routes>
   </HistoryRouter>
 );
