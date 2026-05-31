@@ -17,18 +17,20 @@ export const userProcess = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchUserStatus.fulfilled, (state) => {
+      .addCase(fetchUserStatus.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
+        state.user = action.payload;
       })
       .addCase(fetchUserStatus.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.user = {email: '', avatarUrl: ''};
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user.email = action.payload;
+        state.user = action.payload;
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(loginUser.rejected, (state) => {
-        state.user = initialState.user;
+        state.user = {email: '', avatarUrl: ''};
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
       .addCase(signupUser.fulfilled, (state, action) => {

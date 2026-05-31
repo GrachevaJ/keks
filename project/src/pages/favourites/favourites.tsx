@@ -2,12 +2,13 @@ import Card from '../../components/card/card';
 import NoFavorites from '../../components/no-favorites/no-favorites';
 import Spinner from '../../components/spinner/spinner';
 import { useAppSelector } from '../../hooks/use-app';
+import { getFavoriteOffers, getIsFavoriteOffersLoading } from '../../store/site-data/selectors';
 
 
 const Favourites = (): JSX.Element => {
 
-  const favorites = useAppSelector((state) => state.favorites);
-  const isFavoriteOffersLoading = useAppSelector((state) => state.isFavoriteOffersLoading);
+  const favorites = useAppSelector(getFavoriteOffers);
+  const isFavoriteOffersLoading = useAppSelector(getIsFavoriteOffersLoading);
 
   if (isFavoriteOffersLoading) {
     return <Spinner />;

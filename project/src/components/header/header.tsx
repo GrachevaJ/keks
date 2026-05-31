@@ -1,10 +1,13 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/use-app';
+import { getAuthorizationStatus, getUser } from '../../store/user-process/selectors';
 
 const Header = (): JSX.Element => {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const email = useAppSelector((state) => state.user.email);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const {email, avatarUrl} = useAppSelector(getUser);
+
 
   return (
     <header className="header header--authorized">
@@ -16,13 +19,10 @@ const Header = (): JSX.Element => {
                 <div className="header__user-info">
                   <div className="header__user-avatar">
                     <picture>
-                      <source type="image/webp" srcSet="img/content/user-avatar.webp, img/content/user-avatar@2x.webp 2x" /><img src="img/content/user-avatar.jpg" srcSet="img/content/user-avatar@2x.jpg 2x" width="62" height="62" alt="Аватар пользователя." />
+                      <source type="image/webp" srcSet={avatarUrl} /><img src={avatarUrl} srcSet={avatarUrl} width="62" height="62" alt="Аватар пользователя." />
                     </picture>
                   </div>
                   <p className="header__user-mail">{email}</p>
-                  <pre style={{ background: '#f5f5f5', padding: '10px' }}>
-                    {JSON.stringify(email, null, 2)}
-                  </pre>
                 </div>
               </div>
               <div className="header__buttons">
@@ -56,4 +56,4 @@ const Header = (): JSX.Element => {
   );
 };
 
-export default Header;
+export default memo(Header);

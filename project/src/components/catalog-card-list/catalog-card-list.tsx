@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { setCategory, setType } from '../../store/actions';
+import { getIsOffersLoading, getOffers } from '../../store/site-data/selectors';
+import { getActiveCategory, getType } from '../../store/site-process/selectors';
 import Card from '../card/card';
 import FiltersNotFound from '../filters-not-found/filters-not-found';
 import Spinner from '../spinner/spinner';
@@ -14,16 +16,16 @@ type CatalogCardListProps = {
 const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: CatalogCardListProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const [limit, setLimit] = useState<number>(initialLimit);
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const isOffersLoading = useAppSelector(getIsOffersLoading);
 
   useEffect(() => {
     dispatch(setCategory(null));
     dispatch(setType([]));
   }, [dispatch]);
 
-  const activeCategory = useAppSelector((state) => state.activeCategory);
-  const type = useAppSelector((state) => state.type);
-  const offers = useAppSelector((state) => state.offers);
+  const activeCategory = useAppSelector(getActiveCategory);
+  const type = useAppSelector(getType);
+  const offers = useAppSelector(getOffers);
 
   useEffect(() => {
     setLimit(initialLimit);

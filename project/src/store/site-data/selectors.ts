@@ -9,7 +9,7 @@ export const getIsOfferLoading = ({ [StoreSlice.SiteData]: SITE_DATA}: State): b
 export const getOffer = ({ [StoreSlice.SiteData]: SITE_DATA}: State): Offer | null=> SITE_DATA.offer;
 
 export const getReviews = ({ [StoreSlice.SiteData]: SITE_DATA}: State): Comment[] => SITE_DATA.reviews;
-export const getLastReview = ({ [StoreSlice.SiteData]: SITE_DATA}: State): Comment | null => SITE_DATA.lastReview;
+export const getLastReview = ({ [StoreSlice.SiteData]: SITE_DATA}: State): Comment => SITE_DATA.lastReview;
 export const getReviewsError = ({ [StoreSlice.SiteData]: SITE_DATA}: State): boolean => SITE_DATA.reviewsError;
 
 export const getIsFavoriteOffersLoading = ({ [StoreSlice.SiteData]: SITE_DATA}: State): boolean => SITE_DATA.isFavoriteOffersLoading;

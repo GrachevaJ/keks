@@ -1,8 +1,9 @@
 import { useAppSelector } from '../../hooks/use-app';
+import { getLastReview } from '../../store/site-data/selectors';
 import Review from '../review/review';
 
 const LastReview = (): JSX.Element => {
-  const lastReview = useAppSelector((state) => state.lastReview);
+  const lastReview = useAppSelector(getLastReview);
 
   return (
     <section className="last-review">

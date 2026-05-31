@@ -10,18 +10,20 @@ import Spinner from '../../components/spinner/spinner';
 import { AppRoute, sortLabels } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { fetchOffer, fetchReviews } from '../../store/actions';
+import { getIsOfferLoading, getOffer, getReviews, getReviewsError } from '../../store/site-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { SortType } from '../../types/types';
 
 
 const ProductPage = (): JSX.Element | null => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
-  const offer = useAppSelector((state) => state.offer);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const offer = useAppSelector(getOffer);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const reviews = useAppSelector((state) => state.reviews);
-  const isReviewsError = useAppSelector((state) => state.reviewsError);
+  const reviews = useAppSelector(getReviews);
+  const isReviewsError = useAppSelector(getReviewsError);
   const [currentSort, setCurrentSort] = useState<SortType>('any');
 
   useEffect(() => {

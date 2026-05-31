@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
-import { Category, CategoryName, Comment, Offer, SignupData, ToppingName, User, UserAuth } from '../types/types';
+import { Category, CategoryName, Comment, Offer, SignupData, ToppingName, User, UserAuth, UserData } from '../types/types';
 import {History} from 'history';
 import { Token } from '../utils';
 
@@ -48,7 +48,7 @@ export const fetchUserStatus = createAsyncThunk<User, undefined, {extra: Extra}>
     return data;
   });
 
-export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, {extra: Extra}>(
+export const loginUser = createAsyncThunk<UserData, UserAuth, {extra: Extra}>(
   Action.LOGIN_USER,
   async({email, password}, {extra}) => {
     const {api, history} = extra;
@@ -58,7 +58,7 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, {extra: E
     Token.save(token);
     history.push(AppRoute.Root);
 
-    return email;
+    return data;
   });
 
 export const signupUser = createAsyncThunk<User, SignupData, {extra: Extra}>(

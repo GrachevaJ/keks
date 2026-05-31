@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { setType } from '../../store/actions';
+import { getCategories, getType } from '../../store/site-process/selectors';
 import type { CategoryName, ToppingName } from '../../types/types';
 import Topping from '../topping/topping';
 
@@ -9,8 +10,8 @@ type ToppingsListProps = {
 
 const ToppingsList = ({category}: ToppingsListProps): JSX.Element => {
   const dispatch = useAppDispatch();
-  const currentCategory = useAppSelector((state) => state.categories.find((item) => item.category === category));
-  const activeToppings = useAppSelector((state)=> state.type);
+  const currentCategory = useAppSelector((state) => getCategories(state).find((item) => item.category === category));
+  const activeToppings = useAppSelector(getType);
 
   const toppings: ToppingName[] = currentCategory?.types || [];
 
