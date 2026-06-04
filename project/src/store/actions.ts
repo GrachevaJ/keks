@@ -1,7 +1,7 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
-import { Category, CategoryName, Comment, Offer, SignupData, ToppingName, User, UserAuth, UserData } from '../types/types';
+import { Category, Comment, Offer, SignupData, User, UserAuth, UserData } from '../types/types';
 import {History} from 'history';
 import { Token } from '../utils';
 
@@ -12,9 +12,6 @@ type Extra = {
 }
 
 export const Action = {
-  SET_CATEGORY: 'category/set',
-  SET_OFFERS: 'offers/set',
-  SET_TYPE: 'type/set',
   FETCH_OFFERS: 'offers/fetch',
   FETCH_USER_STATUS: 'user/fetch-status',
   LOGIN_USER: 'user/login',
@@ -25,10 +22,6 @@ export const Action = {
   FETCH_REVIEWS: 'reviews/fetch',
   FETCH_FAVORITES_OFFERS: 'favorites-offer/fetch'
 };
-
-export const setCategory = createAction<CategoryName | null>(Action.SET_CATEGORY);
-// export const setOffers = createAction<Offer[]>(Action.SET_OFFERS);
-export const setType = createAction<ToppingName[]>(Action.SET_TYPE);
 
 export const fetchOffers = createAsyncThunk<Offer[], undefined, {extra: Extra}>(
   Action.FETCH_OFFERS,

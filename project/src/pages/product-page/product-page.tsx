@@ -10,7 +10,7 @@ import Spinner from '../../components/spinner/spinner';
 import { AppRoute, sortLabels } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
 import { fetchOffer, fetchReviews } from '../../store/actions';
-import { getIsOfferLoading, getOffer, getReviews, getReviewsError } from '../../store/site-data/selectors';
+import { getIsOfferLoading, getOffer, getReviews, getReviewsError, getSortedRviews } from '../../store/site-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { SortType } from '../../types/types';
 
@@ -25,6 +25,8 @@ const ProductPage = (): JSX.Element | null => {
   const reviews = useAppSelector(getReviews);
   const isReviewsError = useAppSelector(getReviewsError);
   const [currentSort, setCurrentSort] = useState<SortType>('any');
+  const [dateSort, setDateSort] = useState<'inc' | 'desc'>('inc');
+  const sortedReviews = useAppSelector((state) => getSortedRviews(state, {ratingSort: currentSort, dateSort}));
 
   useEffect(() => {
     const {id} = params;
@@ -43,25 +45,13 @@ const ProductPage = (): JSX.Element | null => {
     setIsFormVisible(!isFormVisible);
   };
 
-  const handleChangeSort = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeSortByRating = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentSort(e.target.value as SortType);
   };
 
-  const getSortedReviews = () => {
-    const reviewsCopy = [...reviews];
-
-    if (currentSort === 'high') {
-      return reviewsCopy.sort((a, b) => b.rating - a.rating);
-    }
-
-    if (currentSort === 'low') {
-      return reviewsCopy.sort((a, b) => a.rating - b.rating);
-    }
-
-    return reviewsCopy;
+  const handleChangeSortByDate = (direction: 'inc' | 'desc') => {
+    setDateSort(direction);
   };
-
-  const sortedReviews = getSortedReviews();
 
   const renderReviews = () => {
     const handleReviewsTryAgain = () => {
@@ -166,7 +156,7 @@ const ProductPage = (): JSX.Element | null => {
                         name="review-sort"
                         value="any"
                         checked={currentSort === 'any'}
-                        onChange={handleChangeSort}
+                        onChange={handleChangeSortByRating}
                       />
                       <label className="custom-toggle__label" htmlFor="review-sort-1">Любой</label>
                     </div>
@@ -179,7 +169,7 @@ const ProductPage = (): JSX.Element | null => {
                         name="review-sort"
                         value="high"
                         checked={currentSort === 'high'}
-                        onChange={handleChangeSort}
+                        onChange={handleChangeSortByRating}
                       />
                       <label className="custom-toggle__label" htmlFor="review-sort-2">Высокий</label>
                     </div>
@@ -192,7 +182,7 @@ const ProductPage = (): JSX.Element | null => {
                         name="review-sort"
                         value="low"
                         checked={currentSort === 'low'}
-                        onChange={handleChangeSort}
+                        onChange={handleChangeSortByRating}
                       />
                       <label className="custom-toggle__label" htmlFor="review-sort-3">Низкий</label>
                     </div>
@@ -203,12 +193,12 @@ const ProductPage = (): JSX.Element | null => {
             <div className="filter-sort__sort-wrap">
               <h3 className="filter-sort__sort-title">Сортировать по дате</h3>
               <div className="filter-sort__sort-btns-wrap">
-                <button className="filter-sort__sort-btn filter-sort__sort-btn--inc filter-sort__sort-btn--active" type="button" aria-label="сортировка по возрастанию">
+                <button className={`filter-sort__sort-btn filter-sort__sort-btn--inc ${dateSort === 'inc' ? 'filter-sort__sort-btn--active' : ''}`} type="button" aria-label="сортировка по возрастанию" onClick={() => handleChangeSortByDate('inc')}>
                   <svg className="filter-sort__sort-icon" width="19" height="13" aria-hidden="true">
                     <use xlinkHref="#icon-chevron-top"></use>
                   </svg>
                 </button>
-                <button className="filter-sort__sort-btn filter-sort__sort-btn--desc" type="button" aria-label="сортировка по убыванию">
+                <button className={`filter-sort__sort-btn filter-sort__sort-btn--desc ${dateSort === 'desc' ? 'filter-sort__sort-btn--active' : ''}`} type="button" aria-label="сортировка по убыванию" onClick={() => handleChangeSortByDate('desc')}>
                   <svg className="filter-sort__sort-icon" width="19" height="13" aria-hidden="true">
                     <use xlinkHref="#icon-chevron-top"></use>
                   </svg>

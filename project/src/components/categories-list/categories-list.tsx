@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
-import { setCategory, setType } from '../../store/actions';
 import { getActiveCategory, getCategories } from '../../store/site-process/selectors';
+import { setActiveCategory, setType } from '../../store/site-process/site-process';
 import { CategoryName } from '../../types/types';
 import Category from '../category/category';
 import ToppingsList from '../toppings-list/toppings-list';
@@ -11,7 +11,7 @@ const CategoriesList = (): JSX.Element => {
   const activeCategory = useAppSelector(getActiveCategory);
 
   const handleClick = (category: CategoryName | null) => {
-    dispatch(setCategory(category));
+    dispatch(setActiveCategory(category));
     dispatch(setType([]));
   };
 
@@ -22,7 +22,6 @@ const CategoriesList = (): JSX.Element => {
         <ul className="catalog-filter__list catalog-filter__list--first-level">
           {categories.map((item) => {
             const safeName = item.category;
-
             return (<Category key={item.category} category={item.category} active={safeName === activeCategory} onClick={handleClick} />
             );})}
         </ul>

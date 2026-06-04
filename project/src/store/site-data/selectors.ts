@@ -1,5 +1,6 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { StoreSlice } from '../../const';
-import type { State } from '../../types/state';
+import type { SortParams, State } from '../../types/state';
 import { Offer, Comment } from '../../types/types';
 
 export const getIsOffersLoading = ({ [StoreSlice.SiteData]: SITE_DATA}: State): boolean => SITE_DATA.isOffersLoading;
@@ -14,3 +15,26 @@ export const getReviewsError = ({ [StoreSlice.SiteData]: SITE_DATA}: State): boo
 
 export const getIsFavoriteOffersLoading = ({ [StoreSlice.SiteData]: SITE_DATA}: State): boolean => SITE_DATA.isFavoriteOffersLoading;
 export const getFavoriteOffers = ({ [StoreSlice.SiteData]: SITE_DATA}: State): Offer[] => SITE_DATA.favoriteOffers;
+
+export const getSortedRviews = createSelector([getReviews, (_state: State, params: SortParams) => params], (reviews: Comment[], {ratingSort, dateSort}) => {
+  const reviewsCopy = [...reviews];
+
+  return reviewsCopy.sort((a, b) => {
+    if (ratingSort === 'high') {
+      if (b.rating !== a.rating) {
+        return b.rating - a.rating;
+      }
+    }
+
+    if (ratingSort === 'low') {
+      if (a.rating !== b.rating) {
+        return a.rating - b.rating;
+      }
+    }
+
+    const timeA = new Date(a.isoDate).getTime();
+    const timeB = new Date(b.isoDate).getTime();
+
+    return dateSort === 'inc' ? timeB - timeA : timeA - timeB;
+  });
+});

@@ -5,14 +5,15 @@ import MainCardList from '../../components/main-card-list/main-card-list';
 import Map from '../../components/map/map';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app';
-import { fetchLastReview, fetchOffers, setCategory } from '../../store/actions';
+import { fetchLastReview, fetchOffers } from '../../store/actions';
+import { setActiveCategory } from '../../store/site-process/site-process';
 
 const Main = ():JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchOffers());
-    dispatch(setCategory(null));
+    dispatch(setActiveCategory(null));
     dispatch(fetchLastReview());
   }, [dispatch]);
 

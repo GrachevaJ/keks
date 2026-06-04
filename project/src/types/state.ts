@@ -27,3 +27,8 @@ export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   user: UserData;
 };
+
+export type SortParams = {
+  ratingSort: string;
+  dateSort: string;
+};

@@ -6,5 +6,5 @@ export const getType = ({ [StoreSlice.SiteProcess]: SITE_PROCESS}: State): Toppi
 
 export const getCategories = ({ [StoreSlice.SiteProcess]: SITE_PROCESS}: State): Category[] => SITE_PROCESS.categories;
 
-export const getActiveCategory = ({ [StoreSlice.SiteProcess]: SITE_PROCESS}: State): CategoryName | null => SITE_PROCESS.activeCategory;
+export const getActiveCategory = ({ [StoreSlice.SiteProcess]: SITE_PROCESS}: State): CategoryName | null => SITE_PROCESS.activeCategory || null;
 

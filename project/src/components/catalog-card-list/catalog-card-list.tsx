@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
-import { setCategory, setType } from '../../store/actions';
 import { getIsOffersLoading, getOffers } from '../../store/site-data/selectors';
 import { getActiveCategory, getType } from '../../store/site-process/selectors';
+import { setActiveCategory, setType } from '../../store/site-process/site-process';
 import Card from '../card/card';
 import FiltersNotFound from '../filters-not-found/filters-not-found';
 import Spinner from '../spinner/spinner';
@@ -19,7 +19,7 @@ const CatalogCardList = ({place = 'catalog', initialLimit = 6, step = 6}: Catalo
   const isOffersLoading = useAppSelector(getIsOffersLoading);
 
   useEffect(() => {
-    dispatch(setCategory(null));
+    dispatch(setActiveCategory(null));
     dispatch(setType([]));
   }, [dispatch]);
 

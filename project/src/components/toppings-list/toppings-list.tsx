@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
-import { setType } from '../../store/actions';
 import { getCategories, getType } from '../../store/site-process/selectors';
+import { setType } from '../../store/site-process/site-process';
 import type { CategoryName, ToppingName } from '../../types/types';
 import Topping from '../topping/topping';
 
