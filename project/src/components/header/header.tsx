@@ -1,7 +1,8 @@
-import { memo } from 'react';
+import { memo, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks/use-app';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
+import { logoutUser } from '../../store/actions';
 import { getFavoriteOffers } from '../../store/site-data/selectors';
 import { getAuthorizationStatus, getUser } from '../../store/user-process/selectors';
 
@@ -9,6 +10,12 @@ const Header = (): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const {email, avatarUrl} = useAppSelector(getUser);
   const favoriteOffers = useAppSelector(getFavoriteOffers);
+  const dispatch = useAppDispatch();
+
+  const handleLogoutClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    dispatch(logoutUser());
+  };
 
 
   return (
@@ -38,7 +45,7 @@ const Header = (): JSX.Element => {
                 </Link>
                 <div className="header__buttons-authorized">
                   <div className="header__btn">
-                    <a className="btn btn--second" href="#">Выйти</a>
+                    <Link className="btn btn--second" to={AppRoute.Root} onClick={handleLogoutClick}>Выйти</Link>
                   </div>
                 </div>
               </div>

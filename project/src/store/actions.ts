@@ -22,7 +22,9 @@ export const Action = {
   FETCH_REVIEWS: 'reviews/fetch',
   FETCH_FAVORITES_OFFERS: 'favorites-offer/fetch',
   TOGGLE_FAVORITE: 'offer/toggle-favorite',
-  POST_REVIEW: 'reviews/post'
+  POST_REVIEW: 'reviews/post',
+  UPLOAD_AVATAR: 'avatar/upload',
+  LOGOUT_USER: 'user/logout'
 };
 
 export const fetchOffers = createAsyncThunk<Offer[], undefined, {extra: Extra}>(
@@ -56,17 +58,36 @@ export const loginUser = createAsyncThunk<UserData, UserAuth, {extra: Extra}>(
     return data;
   });
 
-export const signupUser = createAsyncThunk<User, SignupData, {extra: Extra}>(
+export const signupUser = createAsyncThunk<{token: string}, SignupData, {extra: Extra}>(
   Action.SIGNUP_USER,
-  async({name, email, password}, {extra}) => {
-    const {api, history} = extra;
-    const {data} = await api.post<User>(ApiRoute.Signup, {name, email, password});
+  async (userData, {extra}) => {
+    const {api} = extra;
+    const {data} = await api.post<{token: string}>(ApiRoute.Signup, userData);
 
     Token.save(data.token);
-    history.push(AppRoute.Root);
 
     return data;
   });
+
+export const uploadAvatar = createAsyncThunk<User, FormData, {extra: Extra}>(
+  Action.UPLOAD_AVATAR,
+  async (avatarFormData, {extra}) => {
+    const {api} = extra;
+    const {data} = await api.post<User>(ApiRoute.UploadAvatar, avatarFormData);
+
+    return data;
+  }
+);
+
+export const logoutUser = createAsyncThunk<void, undefined, {extra: Extra}>(
+  Action.LOGOUT_USER,
+  async (_, {extra}) => {
+    const {api} = extra;
+    await api.delete(ApiRoute.Logout);
+
+    Token.drop();
+  }
+);
 
 export const fetchOffer = createAsyncThunk<Offer, Offer['id'], {extra: Extra}>(
   Action.FETCH_OFFER,
@@ -146,11 +167,11 @@ export const toggleFavorite = createAsyncThunk<Offer, FavoriteAuth, {extra: Extr
     }
   });
 
-export const postReview = createAsyncThunk<Comment[], ReviewAuth, {extra: Extra}>(
+export const postReview = createAsyncThunk<Comment, ReviewAuth, {extra: Extra}>(
   Action.POST_REVIEW,
   async ({id, positive, negative, rating}, {extra}) => {
     const {api} = extra;
-    const {data} = await api.post<Comment[]>(`${ApiRoute.Reviews}/${id}`, {positive, negative, rating});
+    const {data} = await api.post<Comment>(`${ApiRoute.Reviews}/${id}`, {positive, negative, rating});
 
     return data;
   }

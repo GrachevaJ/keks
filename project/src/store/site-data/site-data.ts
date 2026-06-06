@@ -98,7 +98,7 @@ export const siteData = createSlice({
         }
       })
       .addCase(postReview.fulfilled, (state, action) => {
-        state.reviews = action.payload;
+        state.reviews.push(action.payload);
       });
   }
 });

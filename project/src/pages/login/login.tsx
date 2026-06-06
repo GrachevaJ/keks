@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks/use-app';
@@ -7,6 +7,7 @@ import { UserAuth } from '../../types/types';
 
 const Login = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,7 +16,17 @@ const Login = (): JSX.Element => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData) as UserAuth;
 
-    dispatch(loginUser(data));
+    setValidationError(null);
+
+    const submitData = async () => {
+      try {
+        await dispatch(loginUser(data)).unwrap();
+      } catch (error) {
+        setValidationError('Неверный email или пароль. Пожалуйста, проверьте данные.');
+      }
+    };
+
+    submitData();
   };
 
   return (
@@ -41,6 +52,7 @@ const Login = (): JSX.Element => {
                     </label>
                   </div>
                 </div>
+                {validationError && <p style={{color: 'red'}}>{validationError}</p>}
                 <button className="btn login-page__btn btn--large" type="submit">Войти</button>
               </form>
             </div>

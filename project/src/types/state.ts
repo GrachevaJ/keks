@@ -26,6 +26,7 @@ export type SiteProcess = {
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   user: UserData;
+  isRegistering: boolean;
 };
 
 export type SortParams = {
