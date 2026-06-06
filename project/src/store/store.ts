@@ -17,9 +17,10 @@ const store = configureStore({
   }),
 });
 
-store.dispatch(fetchUserStatus());
+
 store.dispatch(fetchCategories());
 store.dispatch(fetchOffers());
+store.dispatch(fetchUserStatus());
 store.dispatch(fetchFavoritesOffers());
 
 export default store;

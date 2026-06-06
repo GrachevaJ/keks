@@ -1,6 +1,7 @@
 import type { Offer } from '../../types/types';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
+import LikeButton from '../like-button/like-button';
 
 type CardProps = Offer & {
   place?: 'index' | 'catalog';
@@ -26,11 +27,7 @@ const Card = ({
         </div>
         {isNew && <span className="card-item__label">Новинка</span>}
       </Link>
-      <button className={`card-item__favorites ${isFavorite ? 'card-item__favorites--active' : ''}`}><span className="visually-hidden">Добавить в избранное</span>
-        <svg width="51" height="41" aria-hidden="true">
-          <use xlinkHref="#icon-like"></use>
-        </svg>
-      </button>
+      <LikeButton id={id} isFavorite={isFavorite} />
       {place === 'catalog' ? <span className="card-item__price">{price} p</span> : ''}
       <Link className="card-item__link" to={`${AppRoute.ProductPage}/${id}`}>
         <h3 className="card-item__title"><span>{title}</span></h3>

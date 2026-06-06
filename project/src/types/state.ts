@@ -32,3 +32,4 @@ export type SortParams = {
   ratingSort: string;
   dateSort: string;
 };
+

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosInstance } from 'axios';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
-import { Category, Comment, Offer, SignupData, User, UserAuth, UserData } from '../types/types';
+import { Category, Comment, FavoriteAuth, Offer, ReviewAuth, SignupData, User, UserAuth, UserData } from '../types/types';
 import {History} from 'history';
 import { Token } from '../utils';
 
@@ -20,7 +20,9 @@ export const Action = {
   FETCH_CATEGORIES: 'categories/fetch',
   FETCH_LAST_REVIEW: 'last-review/fetch',
   FETCH_REVIEWS: 'reviews/fetch',
-  FETCH_FAVORITES_OFFERS: 'favorites-offer/fetch'
+  FETCH_FAVORITES_OFFERS: 'favorites-offer/fetch',
+  TOGGLE_FAVORITE: 'offer/toggle-favorite',
+  POST_REVIEW: 'reviews/post'
 };
 
 export const fetchOffers = createAsyncThunk<Offer[], undefined, {extra: Extra}>(
@@ -121,3 +123,35 @@ export const fetchFavoritesOffers = createAsyncThunk<Offer[], undefined, {extra:
 
     return data;
   });
+
+export const toggleFavorite = createAsyncThunk<Offer, FavoriteAuth, {extra: Extra}>(
+  Action.TOGGLE_FAVORITE,
+  async ({id, isFavorite}, {extra}) => {
+    const {api, history} = extra;
+
+    try {
+      const {data} = isFavorite
+        ? await api.delete<Offer>(`${ApiRoute.Favorites}/${id}`)
+        : await api.put<Offer>(`${ApiRoute.Favorites}/${id}`);
+
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.status === HttpCode.NoAuth) {
+        history.push(AppRoute.Login);
+      }
+
+      return Promise.reject(error);
+    }
+  });
+
+export const postReview = createAsyncThunk<Comment[], ReviewAuth, {extra: Extra}>(
+  Action.POST_REVIEW,
+  async ({id, positive, negative, rating}, {extra}) => {
+    const {api} = extra;
+    const {data} = await api.post<Comment[]>(`${ApiRoute.Reviews}/${id}`, {positive, negative, rating});
+
+    return data;
+  }
+);

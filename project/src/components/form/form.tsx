@@ -1,8 +1,12 @@
-import type {ChangeEvent} from 'react';
+import type {ChangeEvent, FormEvent} from 'react';
 import {useState, Fragment} from 'react';
 import { STARS_COUNT } from '../../const';
+import { ReviewAuth } from '../../types/types';
 
-const Form = (): JSX.Element => {
+type FormProps = {
+  onSubmit: (FormData: Omit<ReviewAuth, 'id'>) => void;
+}
+const Form = ({onSubmit}: FormProps): JSX.Element => {
   const [advantages, setAdvantages] = useState<string>('');
   const [disadvantages, setDisadvantages] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
@@ -19,8 +23,18 @@ const Form = (): JSX.Element => {
     setRating(Number(e.target.value));
   };
 
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    onSubmit({
+      positive: advantages,
+      negative: disadvantages,
+      rating
+    });
+  };
+
   return (
-    <form action="#" method="post" autoComplete="off">
+    <form action="#" method="post" autoComplete="off" onSubmit={handleFormSubmit}>
       <div className="review-form__inputs-wrapper">
         <div className="custom-input">
           <label><span className="custom-input__label">Достоинства</span>

@@ -18,6 +18,8 @@ export type SignupData = {
 }
 
 export type UserAuth = Pick<User, 'email'> & {password: string};
+export type FavoriteAuth = Pick<Offer, 'id' | 'isFavorite'>;
+export type ReviewAuth = Pick<Comment, 'negative' | 'positive' | 'rating'> & {id: string};
 
 export type UserData = Omit<User, 'name' | 'token'>;
 

@@ -1,23 +1,25 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import CroppedDescription from '../../components/cropped-description/cropped-description/cropped-description';
 import Form from '../../components/form/form';
+import LikeButton from '../../components/like-button/like-button';
 import NoReviews from '../../components/no-reviews/no-reviews';
 import RatingStar from '../../components/rating-star/rating-star';
 import ReviewList from '../../components/review-list/review-list';
 import ReviewsError from '../../components/reviews-error/reviews-error';
 import Spinner from '../../components/spinner/spinner';
-import { AppRoute, sortLabels } from '../../const';
+import { AppRoute, AuthorizationStatus, sortLabels } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-app';
-import { fetchOffer, fetchReviews } from '../../store/actions';
+import { fetchOffer, fetchReviews, postReview } from '../../store/actions';
 import { getIsOfferLoading, getOffer, getReviews, getReviewsError, getSortedRviews } from '../../store/site-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { SortType } from '../../types/types';
+import { ReviewAuth, SortType } from '../../types/types';
 
 
 const ProductPage = (): JSX.Element | null => {
   const params = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isOfferLoading = useAppSelector(getIsOfferLoading);
   const offer = useAppSelector(getOffer);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -42,6 +44,11 @@ const ProductPage = (): JSX.Element | null => {
   }
 
   const handleFormClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+
     setIsFormVisible(!isFormVisible);
   };
 
@@ -72,11 +79,15 @@ const ProductPage = (): JSX.Element | null => {
     return <ReviewList reviews={sortedReviews} />;
   };
 
+  const onFormSubmit = (formData: Omit<ReviewAuth, 'id'>) => {
+    dispatch(postReview({id, ...formData}));
+  };
+
   if (isOfferLoading) {
     return <Spinner />;
   }
 
-  const {title, price, previewImage,previewImageWebp, isNew, description, weight, rating, reviewCount} = offer;
+  const {id, title, price, previewImage, previewImageWebp, isFavorite, isNew, description, weight, rating, reviewCount} = offer;
 
   return (
     <>
@@ -111,11 +122,7 @@ const ProductPage = (): JSX.Element | null => {
                 </div>
                 <CroppedDescription description={description} />
                 <div className="item-details__button-wrapper">
-                  <button className="item-details__like-button">
-                    <svg width="45" height="37" aria-hidden="true">
-                      <use xlinkHref="#icon-like"></use>
-                    </svg><span className="visually-hidden">Понравилось</span>
-                  </button>
+                  <LikeButton id={id} isFavorite={isFavorite} place='property' />
                   <button className="btn btn--second" type="button" onClick={handleFormClick}>{isFormVisible ? 'Отменить отзыв' : 'Оставить отзыв'}</button>
                 </div>
               </div>
@@ -130,7 +137,7 @@ const ProductPage = (): JSX.Element | null => {
               <div className="review-form__wrapper">
                 <h2 className="review-form__title">оставить отзыв</h2>
                 <div className="review-form__form">
-                  <Form />
+                  <Form onSubmit={onFormSubmit}/>
                 </div>
               </div>
             </div>

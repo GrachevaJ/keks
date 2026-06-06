@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { StoreSlice } from '../../const';
 import type { SiteData } from '../../types/state';
-import { fetchFavoritesOffers, fetchLastReview, fetchOffer, fetchOffers, fetchReviews } from '../actions';
+import { fetchFavoritesOffers, fetchLastReview, fetchOffer, fetchOffers, fetchReviews, postReview, toggleFavorite } from '../actions';
 
 const initialState: SiteData = {
   offers: [],
@@ -28,7 +28,20 @@ const initialState: SiteData = {
 export const siteData = createSlice({
   name: StoreSlice.SiteData,
   initialState,
-  reducers: {},
+  reducers: {
+    clearFavorites: (state) => {
+      state.favoriteOffers = [];
+
+      state.offers = state.offers.map((offer) => ({
+        ...offer,
+        isFavorite: false
+      }));
+
+      if (state.offer) {
+        state.offer.isFavorite = false;
+      }
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffers.pending, (state) => {
@@ -69,6 +82,25 @@ export const siteData = createSlice({
       })
       .addCase(fetchFavoritesOffers.rejected, (state) => {
         state.isFavoriteOffersLoading = false;
+      })
+      .addCase(toggleFavorite.fulfilled, (state, action) => {
+        const updatedOffer = action.payload;
+        state.offers = state.offers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
+
+        if (state.offer && state.offer.id === updatedOffer.id) {
+          state.offer = updatedOffer;
+        }
+
+        if (updatedOffer.isFavorite) {
+          state.favoriteOffers = state.favoriteOffers.concat(updatedOffer);
+        } else {
+          state.favoriteOffers = state.favoriteOffers.filter((favoriteOffer) => favoriteOffer.id !== updatedOffer.id);
+        }
+      })
+      .addCase(postReview.fulfilled, (state, action) => {
+        state.reviews = action.payload;
       });
   }
 });
+
+export const {clearFavorites} = siteData.actions;

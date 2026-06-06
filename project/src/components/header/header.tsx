@@ -2,11 +2,13 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks/use-app';
+import { getFavoriteOffers } from '../../store/site-data/selectors';
 import { getAuthorizationStatus, getUser } from '../../store/user-process/selectors';
 
 const Header = (): JSX.Element => {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const {email, avatarUrl} = useAppSelector(getUser);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
 
   return (
@@ -32,7 +34,7 @@ const Header = (): JSX.Element => {
                       <use xlinkHref="#icon-favourite"></use>
                     </svg>
                   </span>
-                  <span className="header__favourite-number">2</span><span className="visually-hidden">Избранное</span>
+                  <span className="header__favourite-number">{favoriteOffers.length}</span><span className="visually-hidden">Избранное</span>
                 </Link>
                 <div className="header__buttons-authorized">
                   <div className="header__btn">
