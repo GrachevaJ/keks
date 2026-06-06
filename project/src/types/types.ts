@@ -40,7 +40,7 @@ export type Offer = {
   reviewCount: number;
 }
 
-export type Address = {
+export type AddressType = {
   id: number;
   title: string;
   address: string;

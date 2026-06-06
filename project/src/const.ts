@@ -1,4 +1,4 @@
-import { Address, CategoryName, SortType, ToppingName } from './types/types';
+import { AddressType, CategoryName, SortType, ToppingName } from './types/types';
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -34,7 +34,7 @@ export enum ApiRoute {
 
 export const STARS_COUNT = 5;
 
-export const addresses: Address[] = [
+export const addresses: AddressType[] = [
   {
     id: 1,
     title: 'Кондитерская 1',

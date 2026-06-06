@@ -21,6 +21,7 @@ export type SiteProcess = {
   type: ToppingName[];
   categories: Category[];
   activeCategory: CategoryName | null;
+  activeAddressId: number;
 };
 
 export type UserProcess = {

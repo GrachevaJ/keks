@@ -8,3 +8,4 @@ export const getCategories = ({ [StoreSlice.SiteProcess]: SITE_PROCESS}: State):
 
 export const getActiveCategory = ({ [StoreSlice.SiteProcess]: SITE_PROCESS}: State): CategoryName | null => SITE_PROCESS.activeCategory || null;
 
+export const getActiveAddressId = ({ [StoreSlice.SiteProcess]: SITE_PROCESS}: State): number => SITE_PROCESS.activeAddressId;

@@ -7,7 +7,8 @@ import { fetchCategories } from '../actions';
 const initialState: SiteProcess = {
   type: [],
   categories: [],
-  activeCategory: null
+  activeCategory: null,
+  activeAddressId: 1
 };
 
 export const siteProcess = createSlice({
@@ -20,9 +21,8 @@ export const siteProcess = createSlice({
     setActiveCategory: (state, action: PayloadAction<CategoryName | null>) => {
       state.activeCategory = action.payload;
     },
-    resetFilters: (state) => {
-      state.type = [];
-      state.activeCategory = null;
+    setActiveAddressId: (state, action) => {
+      state.activeAddressId = Number(action.payload);
     }
   },
   extraReducers(builder) {
@@ -33,4 +33,4 @@ export const siteProcess = createSlice({
   },
 });
 
-export const {setType, setActiveCategory, resetFilters} = siteProcess.actions;
+export const {setType, setActiveCategory, setActiveAddressId} = siteProcess.actions;
