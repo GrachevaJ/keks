@@ -10,17 +10,7 @@ const initialState: SiteData = {
   isOfferLoading: false,
   favoriteOffers: [],
   isFavoriteOffersLoading: false,
-  lastReview: {
-    id: '',
-    isoDate: '',
-    user: {
-      name: '',
-      avatarUrl: '',
-    },
-    positive: '',
-    negative: '',
-    rating: 0
-  },
+  lastReview: null,
   reviews: [],
   reviewsError: false
 };

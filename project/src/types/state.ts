@@ -12,7 +12,7 @@ export type SiteData = {
   isOfferLoading: boolean;
   favoriteOffers: Offer[];
   isFavoriteOffersLoading: boolean;
-  lastReview: Comment;
+  lastReview: Comment | null;
   reviews: Comment[];
   reviewsError: boolean;
 };
